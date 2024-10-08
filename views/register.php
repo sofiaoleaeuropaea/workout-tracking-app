@@ -12,7 +12,7 @@
 <body>
     <?php require("templates/navbar.php"); ?>
     <div class="container">
-        <form method="POST" action="<?= ROOT ?>/register/">
+        <form method="POST" action="<?= ROOT ?>/register/" enctype="multipart/form-data">
             <div>
                 <label>
                     Name
@@ -52,7 +52,7 @@
             <div>
                 <label>
                     Profile photo
-                    <input type="text" name="postal_code" required minlength="4" maxlength="20">
+                    <input type="file" name="profile_photo" accept="image/*">
                 </label>
             </div>
             <div class="field">
