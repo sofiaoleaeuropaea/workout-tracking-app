@@ -4,6 +4,7 @@
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: 'General Sans', sans-serif;
 }
 
 html {
@@ -71,7 +72,7 @@ main {
   text-transform: capitalize;
   font-size: 0.875rem;
   padding: 0 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .logo {
@@ -82,8 +83,9 @@ main {
 /* buttons */
 .btn {
   display: inline-block;
-  font-weight: 600;
-  padding: 0.625em 0em;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.625em 1.25em;
   position: relative;
   cursor: pointer;
   background-color: #fff;
@@ -93,4 +95,24 @@ main {
   position: relative;
   z-index: 1;
   margin: 1.25em;
+}
+
+/* main */
+.hero__wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 40px;
+  height: calc(100vh - 146.84px);
+}
+
+.hero__content__background {
+  background-image: url(/images/hero_image.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 20px;
+  color: #fff;
 }
