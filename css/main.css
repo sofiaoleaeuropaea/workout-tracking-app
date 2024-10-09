@@ -107,6 +107,9 @@ main {
 }
 
 .hero__content__background {
+  position: relative;
+  bottom: 20px;
+
   background-image: url(/images/hero_image.jpg);
   background-size: cover;
   background-position: center;

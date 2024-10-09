@@ -12,6 +12,11 @@
 <body>
     <?php require("templates/navbar.php"); ?>
     <div class="container">
+        <?php
+        if (isset($message)) {
+            echo '<p role="alert">' . $message . '</p>';
+        }
+        ?>
         <form method="POST" action="<?= ROOT ?>/register/" enctype="multipart/form-data">
             <div>
                 <label>
@@ -40,7 +45,7 @@
             <div>
                 <label>
                     Confirm password
-                    <input type="password" name="password_confirm" required minlength="8" maxlength="1000">
+                    <input type="password" name="password_repeat" required minlength="8" maxlength="1000">
                 </label>
             </div>
             <div>
@@ -52,7 +57,7 @@
             <div>
                 <label>
                     Profile photo
-                    <input type="file" name="profile_photo" accept="image/*">
+                    <input type="file" name="photo" accept="image/*">
                 </label>
             </div>
             <div class="field">
