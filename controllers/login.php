@@ -18,12 +18,10 @@ if (isset($_POST["submit"])) {
         $modelUsers = new Users();
         $user = $modelUsers->loginUser($_POST["email"]);
 
-
-
         if (!empty($user) &&  password_verify($_POST["password"], $user["password_hash"])) {
             $_SESSION["user_id"] = $user["user_id"];
             // alterar para root dashboard
-            header("Location: " . ROOT . "/");
+            header("Location: " . ROOT . "/dashboard");
         } else {
             $message = "Please, enter a valid username and password.";
         }
