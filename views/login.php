@@ -16,13 +16,7 @@
 
             <div>
                 <label>
-                    Username
-                    <input type="text" name="username" required minlength="3" maxlength="60">
-                </label>
-            </div>
-            <div>
-                <label>
-                    Email
+                    Emaill
                     <input type="email" name="email" required>
                 </label>
             </div>
