@@ -93,6 +93,22 @@ class Users extends Base
         return $user;
     }
 
+    public function loginUser($user)
+    {
+        $query = $this->db->prepare("
+        SELECT
+            user_id, username, password_hash
+        FROM
+            users
+        WHERE 
+            email = ?
+    ");
+
+        $query->execute([$user]);
+
+        return $query->fetch();
+    }
+
     public function deleteUser($user)
     {
         $query = $this->db->prepare("
