@@ -1,6 +1,6 @@
 <?php
-// VER COMO FAZER COM A QUESTÃO DO IS_ADMIN
-// UPDATE USER??
+// TODO: ADD IS_ADMIN
+
 require_once("base.php");
 
 class Users extends Base
@@ -76,16 +76,16 @@ class Users extends Base
            (is_admin, name, username, email, password_hash, refresh_token, birth_date, photo)
         VALUES(?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        // mudar o valor hardcoded de is_admin e a photo
+        // mudar o valor hardcoded de is_admin
         $query->execute([
             0,
             $user["name"],
             $user["username"],
             $user["email"],
-            password_hash($user["password"], PASSWORD_DEFAULT),
+            password_hash($user["password"], PASSWORD_BCRYPT),
             $api_key,
             $user["birthdate"],
-            null
+            $user["photo"]
         ]);
 
         $user['user_id'] = $this->db->lastInsertId();
@@ -107,6 +107,36 @@ class Users extends Base
         $query->execute([$user]);
 
         return $query->fetch();
+    }
+
+    public function updateUser($user_data, $id)
+    {
+        $query = $this->db->prepare("
+        UPDATE users
+        SET
+        name = ?,
+        username = ?,
+        email = ?,
+        password_hash = ?,
+        birth_date = ?, 
+        photo = ?
+        WHERE
+         user_id = ?
+        ");
+
+        $query->execute([
+            $user_data["name"],
+            $user_data["username"],
+            $user_data["email"],
+            $user_data["password"],
+            $user_data["birthdate"],
+            $user_data["photo"],
+            $id
+        ]);
+
+        $user_data["user_id"] = $id;
+
+        return $user_data;
     }
 
     public function deleteUser($user)
