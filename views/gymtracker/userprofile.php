@@ -17,11 +17,11 @@
             <div class="userprofile_container">
                 <div class="form_container">
                     <?php
-                    if (isset($message)) {
-                        echo '<p role="alert">' . $message . '</p>';
+                    if (isset($message_profile)) {
+                        echo '<p role="alert">' . $message_profile . '</p>';
                     }
                     echo '
-                <form method="POST" action="' . ROOT . '/userprofile/" enctype="multipart/form-data">
+                    <form method="POST" action="' . ROOT . '/userprofile/" enctype="multipart/form-data">
                     <div>';
 
                     if (!empty($user["photo"])) {
@@ -47,12 +47,18 @@
                             <input id="input_date" class="input_field" type="date" name="birthdate" required value="' . $user["birth_date"] . '">
                     </div>
                     <div>
-                        <button type="submit" name="edit" class="btn">Edit profile</button>
+                        <button type="submit" name="edit_profile" class="btn">Edit profile</button>
                     </div>
                 </form>';
                     ?>
                 </div>
                 <div class="form_container">
+                    <?php
+                    if (isset($message)) {
+                        echo '<p role="alert">' . $message . '</p>';
+                    }
+                    echo '
+                <form method="POST" action="' . ROOT . '/userpassword/" enctype="multipart/form-data">
                     <div class="input_container">
                         <label for="input_current_password" class="input_label">Current Password</label>
                         <input id="input_current_password" class="input_field" type="password" name="current_password" minlength="8" maxlength="1000" placeholder="********">
@@ -67,14 +73,13 @@
                     </div>
                     <div>
                         <button type="submit" name="edit_password" class="btn">Change password</button>
-                    </div>
+                    </div></form>';
+                    ?>
                 </div>
             </div>
             <div>
                 <a href="<?= ROOT ?> " class="btn">Delete account</a>
             </div>
-
-
         </div>
     </main>
 </body>
