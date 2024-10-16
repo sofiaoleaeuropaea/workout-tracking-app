@@ -12,64 +12,52 @@
 <body>
     <?php require("templates/navbar.php"); ?>
     <div class="container">
-        <?php
-        if (isset($message)) {
-            echo '<p role="alert">' . $message . '</p>';
-        }
-        ?>
-        <form method="POST" action="<?= ROOT ?>/register/" enctype="multipart/form-data">
-            <div>
-                <label>
-                    Name
-                    <input type="text" name="name" required minlength="3" maxlength="100">
-                </label>
-            </div>
-            <div>
-                <label>
-                    Username
-                    <input type="text" name="username" required minlength="3" maxlength="60">
-                </label>
-            </div>
-            <div>
-                <label>
-                    Email
-                    <input type="email" name="email" required>
-                </label>
-            </div>
-            <div>
-                <label>
-                    Password
-                    <input type="password" name="password" required minlength="8" maxlength="1000">
-                </label>
-            </div>
-            <div>
-                <label>
-                    Confirm password
-                    <input type="password" name="password_repeat" required minlength="8" maxlength="1000">
-                </label>
-            </div>
-            <div>
-                <label>
-                    Birthdate
-                    <input type="date" name="birthdate" required>
-                </label>
-            </div>
-            <div>
-                <label>
-                    Profile photo
-                    <input type="file" name="photo" accept="image/*">
-                </label>
-            </div>
-            <div class="field">
-                <label>
-                    <input type="checkbox" name="agrees" required>
-                    I agree with the terms and conditions.
-                </label>
-            </div>
-            <div>
-                <button type="submit" name="register" class="btn">Submit</button>
-            </div>
-        </form>
+        <div class="form_container">
+            <?php
+            if (isset($message)) {
+                echo '<p role="alert">' . $message . '</p>';
+            }
+            ?>
+            <form method="POST" action="<?= ROOT ?>/register/" enctype="multipart/form-data">
+                <div class="input_container">
+                    <label class="input_label" for="input_name"> Name </label>
+                    <input class="input_field" id="input_name" type="text" name="name" required minlength="3" maxlength="100">
+                </div>
+                <div class="input_container">
+                    <label class="input_label" for="input_username">Username</label>
+                    <input class="input_field" id="input_username" type="text" name="username" required minlength="3" maxlength="60">
+                </div>
+                <div class="input_container">
+                    <label class="input_label" for="input_email">Email</label>
+                    <input id="input_email" class="input_field" type="email" name="email" required>
+                </div>
+                <div class="input_container">
+                    <label class="input_label" for="input_password">Password</label>
+                    <input id="input_password" class="input_field" type="password" name="password" required minlength="8" maxlength="1000">
+                </div>
+                <div class="input_container">
+                    <label class="input_label" for="input_confirm_password">Confirm password</label>
+                    <input id="input_confirm_password" class="input_field" type="password" name="password_repeat" required minlength="8" maxlength="1000">
+                </div>
+                <div class="input_container">
+                    <label for="input_birthdate" class="input_label">Birthdate</label>
+                    <input id="input_birthdate" class="input_field" type="date" name="birthdate" required>
+                </div>
+                <div class="input_container">
+                    <label for="input_photo" class="input_label">Profile photo</label>
+                    <input class="input_field" id="input_photo" type="file" name="photo" accept="image/*">
+                </div>
+                <div class="input_container">
+                    <label>
+                        <input type="checkbox" name="agrees" required>
+                        I agree with the terms and conditions.
+                    </label>
+                </div>
+                <div>
+                    <button type="submit" name="register" class="btn">Submit</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 
