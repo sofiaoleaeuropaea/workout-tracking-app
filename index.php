@@ -18,7 +18,7 @@ if (!empty($url_parts[2])) {
 
 if (!file_exists("controllers/" . $controller . ".php")) {
     http_response_code(404);
-    die("404: This page was not found.");
+    die("Not Found");
 }
 
 require("controllers/" . $controller . ".php");

@@ -1,27 +1,7 @@
 <?php
 // TODO: REFACTOR Validators
 require("models/users.php");
-
-function imageValidator($image)
-{
-    $allowed_image_formats = [
-        "image/jpeg" => ".jpg",
-        "image/webp" => ".webp",
-        "image/avif" => ".avif",
-        "image/png" => ".png"
-    ];
-
-    $max_image_size = 2 * 1024 * 1024;
-
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $media_type = $finfo->file($image['tmp_name']);
-
-    if (!array_key_exists($media_type, $allowed_image_formats) || mb_strlen($image['size'])  > $max_image_size) {
-        return false;
-    }
-
-    return true;
-}
+require("validators/validators.php");
 
 if (isset($_POST["register"])) {
 
@@ -29,9 +9,19 @@ if (isset($_POST["register"])) {
         $_POST[$key] = htmlspecialchars(strip_tags(trim($value)));
     }
 
+    $errors = [];
+
+    $birthdateValidation = dateValidator($_POST["birthdate"]);
+
+    if ($birthdateValidation !== true) {
+        $errors[] = $birthdateValidation;
+    }
+
     if (!empty($_FILES['photo']['tmp_name'])) {
 
-        if (imageValidator($_FILES['photo'])) {
+        $imageValidation = imageValidator($_FILES['photo']);
+
+        if ($imageValidation === true) {
             $allowed_image_formats = [
                 "image/jpeg" => ".jpg",
                 "image/webp" => ".webp",
@@ -47,13 +37,19 @@ if (isset($_POST["register"])) {
             $full_path = "images/" . $file_name . $file_extension;
 
             if (!move_uploaded_file($_FILES['photo']['tmp_name'], $full_path)) {
-                $message = "Image processing failed.";
-                require("views/register.php");
-                exit;
+                $errors[] = "Image processing failed.";
             }
+        } else {
+            $errors[] = $imageValidation;
         }
     } else {
         $full_path = null;
+    }
+
+    if (!empty($errors)) {
+        $message = implode(';', $errors);
+        require("views/register.php");
+        exit;
     }
 
     if (
@@ -74,11 +70,9 @@ if (isset($_POST["register"])) {
         $_POST["password"] === $_POST["password_repeat"]
 
     ) {
-
         $modelUsers = new Users();
         $userByUsername = $modelUsers->getByUsername($_POST["username"]);
         $userByEmail = $modelUsers->getByEmail($_POST["email"]);
-
 
         if (empty($userByUsername) && empty($userByEmail)) {
 
