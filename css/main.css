@@ -20,6 +20,14 @@ body {
   background-color: rgb(255, 248, 241);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+  margin-bottom: 1rem;
+}
+
 a {
   text-decoration: none;
   color: inherit;
@@ -95,21 +103,24 @@ main {
   position: relative;
   z-index: 1;
   margin: 1.25em;
+  border: none;
 }
 
 /* main */
 .hero__wrapper {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
+  display: flex;
+  flex-direction: row;
   gap: 40px;
   height: calc(100vh - 146.84px);
 }
 
-.hero__content__background {
+.hero__content {
+  flex: 1;
+}
+
+.image__background {
   position: relative;
   bottom: 20px;
-
   background-image: url(/images/hero_image.jpg);
   background-size: cover;
   background-position: center;
@@ -118,4 +129,55 @@ main {
   overflow: hidden;
   padding: 20px;
   color: #fff;
+}
+
+.userprofile_container {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.form_container {
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 50px;
+  flex: 1;
+  max-width: 500px;
+}
+
+.profile-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.input_container {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+  padding: 15px 0;
+}
+
+.input_label {
+  color: #302f26;
+}
+
+.input_field {
+  height: 40px;
+  text-indent: 10px;
+  border-radius: 15px;
+  outline: none;
+  background-color: transparent;
+  border: 1px solid #21262e;
+  transition: all 0.3s;
+  caret-color: #256f5d;
+}
+
+.input_field:focus {
+  border: 1px solid transparent;
+  box-shadow: 0px 0px 0px 2px #256f5d;
+  background-color: transparent;
 }
