@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <?php require("templates/navbar.php"); ?>
+    <?php require("views/templates/navbar.php"); ?>
     <div class="container">
         <div class="form_container">
             <?php
@@ -18,7 +18,7 @@
                 echo '<p role="alert">' . $message . '</p>';
             }
             ?>
-            <form method="POST" action="<?= ROOT ?>/login/">
+            <form method="POST" action="<?= ROOT ?>/gymtracker/login/">
                 <div class="input_container">
                     <label for="input_email" class="input_label">Emaill</label>
                     <input id="input_email" class="input_field" type="email" name="email" required>

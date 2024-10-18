@@ -23,7 +23,7 @@ class Users extends Base
     {
         $query = $this->db->prepare("
             SELECT
-                user_id, is_admin, name, username, email, birth_date
+                user_id, is_admin, name, username, email, password_hash, birth_date, photo
             FROM
                 users
             WHERE 
@@ -82,7 +82,7 @@ class Users extends Base
             $user["name"],
             $user["username"],
             $user["email"],
-            password_hash($user["password"], PASSWORD_BCRYPT),
+            password_hash($user["password"], PASSWORD_DEFAULT),
             $api_key,
             $user["birthdate"],
             $user["photo"]
@@ -117,7 +117,6 @@ class Users extends Base
         name = ?,
         username = ?,
         email = ?,
-        password_hash = ?,
         birth_date = ?, 
         photo = ?
         WHERE
@@ -128,9 +127,28 @@ class Users extends Base
             $user_data["name"],
             $user_data["username"],
             $user_data["email"],
-            $user_data["password"],
             $user_data["birthdate"],
             $user_data["photo"],
+            $id
+        ]);
+
+        $user_data["user_id"] = $id;
+
+        return $user_data;
+    }
+
+    public function updatePassword($user_data, $id)
+    {
+        $query = $this->db->prepare("
+        UPDATE users
+        SET
+        password_hash = ?
+        WHERE
+         user_id = ?
+        ");
+
+        $query->execute([
+            password_hash($user_data["new_password"], PASSWORD_DEFAULT),
             $id
         ]);
 

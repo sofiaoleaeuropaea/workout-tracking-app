@@ -45,6 +45,6 @@ if (isset($_SESSION["user_id"])) {
 
     require("views/gymtracker/userprofile.php");
 } else {
-    http_response_code(400);
-    die("400: Bad Request");
+    http_response_code(403);
+    die("403: Access denied");
 }

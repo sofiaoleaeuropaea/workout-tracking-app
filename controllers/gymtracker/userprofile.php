@@ -44,15 +44,17 @@ if (isset($_SESSION["user_id"])) {
             $full_path = $user["photo"];
         }
 
+        if (!empty($_POST["birthdate"])) {
+            $birthdate_validation = dateValidator($_POST["birthdate"]);
+        } else {
+            $errors[] = $birthdate_validation;
+        }
+
         if (!empty($errors)) {
-            $message_Profile = implode(';', $errors);
+            $message_profile = implode(';', $errors);
         }
 
         if (
-            !empty($_POST["name"]) &&
-            !empty($_POST["username"]) &&
-            !empty($_POST["email"]) &&
-            !empty($_POST["birthdate"]) &&
             mb_strlen($_POST["name"]) >= 3 &&
             mb_strlen($_POST["name"]) <= 100 &&
             mb_strlen($_POST["username"]) >= 3 &&
@@ -81,6 +83,6 @@ if (isset($_SESSION["user_id"])) {
 
     require("views/gymtracker/userprofile.php");
 } else {
-    http_response_code(400);
-    die("400: Bad Request");
+    http_response_code(403);
+    die("403: Access denied");
 }
