@@ -12,7 +12,7 @@
 <body>
     <?php require("templates/navbar.php"); ?>
     <div class="container">
-        <div class="form_container">
+        <div class="form_container form_container-w">
             <?php
             if (isset($message)) {
                 echo '<p role="alert">' . $message . '</p>';
