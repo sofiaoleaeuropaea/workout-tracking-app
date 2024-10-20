@@ -21,7 +21,7 @@
                         echo '<p role="alert">' . $message_profile . '</p>';
                     }
                     echo '
-                    <form method="POST" action="' . ROOT . '/userprofile/" enctype="multipart/form-data">
+                    <form method="POST" action="' . ROOT . '/gymtracker/userprofile/" enctype="multipart/form-data">
                     <div>';
 
                     if (!empty($user["photo"])) {
@@ -58,7 +58,7 @@
                         echo '<p role="alert">' . $message . '</p>';
                     }
                     echo '
-                <form method="POST" action="' . ROOT . '/userpassword/" enctype="multipart/form-data">
+                <form method="POST" action="' . ROOT . '/gymtracker/userpassword/" enctype="multipart/form-data">
                     <div class="input_container">
                         <label for="input_current_password" class="input_label">Current Password</label>
                         <input id="input_current_password" class="input_field" type="password" name="current_password" minlength="8" maxlength="1000" placeholder="********">
