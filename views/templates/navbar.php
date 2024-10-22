@@ -20,12 +20,12 @@
                             </a>
                         </li>
                         <li class="btn">
-                            <a href="<?= ROOT ?>/gymtracker/workoutplans/">
+                            <a href="<?= ROOT ?>/gymtracker/createworkout/">
                                 <i class="material-icons">fitness_center</i>
                             </a>
                         </li>
                         <li class="btn">
-                            <a href="<?= ROOT ?>/gymtracker/tracker/">
+                            <a href="<?= ROOT ?>/gymtracker/workouttracker/">
                                 <i class="material-icons">track_changes</i>
                             </a>
                         </li>
