@@ -134,7 +134,7 @@ main {
 .userprofile_container {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: flex-start;
 }
 
@@ -144,6 +144,7 @@ main {
   padding: 50px;
   flex: 1;
 }
+
 .form_container-w {
   max-width: 500px;
 }
@@ -153,6 +154,24 @@ main {
   height: 100px;
   object-fit: cover;
   border-radius: 10px;
+}
+
+.user_info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user_photo-small {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.user_name {
+  font-size: 20px;
 }
 
 .input_container {
@@ -183,6 +202,61 @@ main {
   background-color: transparent;
 }
 
+.workout_plan_container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
 .remove_exercise:disabled {
   display: none;
+}
+
+.workout_plan_list {
+  flex: 30%;
+  border-radius: 20px;
+  background-color: #fff;
+  padding: 30px;
+  margin: 0 20px 20px 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.workout_plan {
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.workout_plan:last-child {
+  border-bottom: none;
+}
+
+.workout_plan a {
+  text-decoration: none;
+  font-weight: 400;
+  flex: 1;
+}
+
+.workout_plan::before {
+  content: '🏋️';
+  margin-right: 10px;
+}
+
+.workout_plan:hover {
+  background-color: #f0f0f0;
+  transform: translateX(5px);
+}
+
+.workout_plan a:hover {
+  color: #256f5d;
+}
+
+.workout_plan a:focus,
+.workout_plan a:active {
+  color: #256f5d;
+  outline: none;
 }
