@@ -2,6 +2,51 @@ document.addEventListener('DOMContentLoaded', () => {
   const exerciseList = document.getElementById('exercise_list');
   let exerciseCount = 1;
 
+  function attachRemoveEvent() {
+    document.querySelectorAll('.remove_exercise').forEach((button) => {
+      button.removeEventListener('click', removeExercise);
+      button.addEventListener('click', removeExercise);
+    });
+  }
+
+  function removeExercise() {
+    const exerciseItems = document.querySelectorAll('.exercise_item');
+
+    if (exerciseItems.length > 1) {
+      this.closest('.exercise_item').remove();
+    }
+
+    updateRemoveButtons();
+  }
+
+  function updateRemoveButtons() {
+    const exerciseItems = document.querySelectorAll('.exercise_item');
+
+    exerciseItems.forEach((item) => {
+      const removeButton = item.querySelector('.remove_exercise');
+      if (exerciseItems.length === 1) {
+        removeButton.disabled = true;
+      } else {
+        removeButton.disabled = false;
+      }
+    });
+  }
+
+  function resetForm() {
+    document.getElementById('workout_form').reset();
+
+    while (exerciseList.children.length > 1) {
+      exerciseList.removeChild(exerciseList.lastChild);
+    }
+
+    const firstExerciseItem = exerciseList.querySelector('.exercise_item');
+    firstExerciseItem.querySelector('select').selectedIndex = 0;
+    firstExerciseItem.querySelector('input[name="exercises[0][sets]"]').value =
+      '';
+    firstExerciseItem.querySelector('input[name="exercises[0][reps]"]').value =
+      '';
+  }
+
   document
     .getElementById('add_exercise')
     .addEventListener('click', function () {
@@ -32,35 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
       updateRemoveButtons();
     });
 
-  function attachRemoveEvent() {
-    document.querySelectorAll('.remove_exercise').forEach((button) => {
-      button.removeEventListener('click', removeExercise);
-      button.addEventListener('click', removeExercise);
-    });
-  }
-
-  function removeExercise() {
-    const exerciseItems = document.querySelectorAll('.exercise_item');
-
-    if (exerciseItems.length > 1) {
-      this.closest('.exercise_item').remove();
-    }
-
-    updateRemoveButtons();
-  }
-
-  function updateRemoveButtons() {
-    const exerciseItems = document.querySelectorAll('.exercise_item');
-
-    exerciseItems.forEach((item) => {
-      const removeButton = item.querySelector('.remove_exercise');
-      if (exerciseItems.length === 1) {
-        removeButton.disabled = true;
-      } else {
-        removeButton.disabled = false;
-      }
-    });
-  }
+  document.getElementById('btn_cancel').addEventListener('click', resetForm);
 
   updateRemoveButtons();
 });
