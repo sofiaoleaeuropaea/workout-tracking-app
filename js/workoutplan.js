@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const form = document.getElementById('workout_plan_form');
-  const messageElement = document.getElementById('message');
   const exerciseList = document.getElementById('exercise_list');
   let exerciseCount = 1;
 
@@ -12,21 +10,20 @@ document.addEventListener('DOMContentLoaded', () => {
         .cloneNode(true);
 
       exerciseItem.querySelector('select').selectedIndex = 0;
-      exerciseItem.querySelector('input[name="sets"]').value = '';
-      exerciseItem.querySelector('input[name="reps"]').value = '';
+      exerciseItem.querySelector('input[name="exercises[0][sets]"]').value = '';
+      exerciseItem.querySelector('input[name="exercises[0][reps]"]').value = '';
 
-      exerciseItem.querySelector('select').id =
-        'exercise_name_' + exerciseCount;
-      exerciseItem
-        .querySelector('label[for="sets"]')
-        .setAttribute('for', 'sets_' + exerciseCount);
-      exerciseItem.querySelector('input[name="sets"]').id =
-        'sets_' + exerciseCount;
-      exerciseItem
-        .querySelector('label[for="reps"]')
-        .setAttribute('for', 'reps_' + exerciseCount);
-      exerciseItem.querySelector('input[name="reps"]').id =
-        'reps_' + exerciseCount;
+      exerciseItem.querySelector(
+        `select[name="exercises[0][exercise_id]"]`,
+      ).name = `exercises[${exerciseCount}][exercise_id]`;
+
+      exerciseItem.querySelector(
+        `input[name="exercises[0][sets]"]`,
+      ).name = `exercises[${exerciseCount}][sets]`;
+
+      exerciseItem.querySelector(
+        `input[name="exercises[0][reps]"]`,
+      ).name = `exercises[${exerciseCount}][reps]`;
 
       exerciseList.appendChild(exerciseItem);
       exerciseCount++;
@@ -37,12 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function attachRemoveEvent() {
     document.querySelectorAll('.remove_exercise').forEach((button) => {
-      button.removeEventListener('click', handleRemove);
-      button.addEventListener('click', handleRemove);
+      button.removeEventListener('click', removeExercise);
+      button.addEventListener('click', removeExercise);
     });
   }
 
-  function handleRemove() {
+  function removeExercise() {
     const exerciseItems = document.querySelectorAll('.exercise_item');
 
     if (exerciseItems.length > 1) {
@@ -66,32 +63,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   updateRemoveButtons();
-
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const form_data = new FormData(form);
-
-    fetch('<?= ROOT ?>/gymtracker/workoutplans', {
-      method: 'POST',
-      body: form_data,
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((result) => {
-        if (result.success) {
-          messageElement.textContent = result.message;
-          messageElement.style.color = 'green';
-          form.reset();
-        } else {
-          messageElement.textContent = result.message;
-          messageElement.style.color = 'red';
-        }
-      })
-      .catch((error) => {
-        messageElement.textContent = 'An error occurred. Please try again.';
-        messageElement.style.color = 'red';
-        console.error('Error fetching:', error);
-      });
-  });
 });
