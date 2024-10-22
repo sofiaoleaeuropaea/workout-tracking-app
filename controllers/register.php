@@ -34,7 +34,7 @@ if (isset($_POST["register"])) {
 
             $file_name =  date("Y-m-H-i-s") . "_" . bin2hex(random_bytes(16));
             $file_extension = $allowed_image_formats[$media_type];
-            $full_path = "images/" . $file_name . $file_extension;
+            $full_path = "/images/" . $file_name . $file_extension;
 
             if (!move_uploaded_file($_FILES['photo']['tmp_name'], $full_path)) {
                 $errors[] = "Image processing failed.";
