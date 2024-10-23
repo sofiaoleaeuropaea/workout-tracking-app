@@ -22,28 +22,28 @@ if (isset($_POST["register"])) {
         $imageValidation = imageValidator($_FILES['photo']);
 
         if ($imageValidation === true) {
-            $allowed_image_formats = [
+            $allowedImageFormats = [
                 "image/jpeg" => ".jpg",
                 "image/webp" => ".webp",
                 "image/avif" => ".avif",
                 "image/png" => ".png"
             ];
 
-            $finfo = new finfo(FILEINFO_MIME_TYPE);
-            $media_type = $finfo->file($_FILES['photo']['tmp_name']);
+            $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+            $mediaType = $fileInfo->file($_FILES['photo']['tmp_name']);
 
-            $file_name =  date("Y-m-H-i-s") . "_" . bin2hex(random_bytes(16));
-            $file_extension = $allowed_image_formats[$media_type];
-            $full_path = "/images/" . $file_name . $file_extension;
+            $fileName =  date("Y-m-H-i-s") . "_" . bin2hex(random_bytes(16));
+            $fileExtension = $allowedImageFormats[$mediaType];
+            $fullPath = "/images/" . $fileName . $fileExtension;
 
-            if (!move_uploaded_file($_FILES['photo']['tmp_name'], $full_path)) {
+            if (!move_uploaded_file($_FILES['photo']['tmp_name'], $fullPath)) {
                 $errors[] = "Image processing failed.";
             }
         } else {
             $errors[] = $imageValidation;
         }
     } else {
-        $full_path = null;
+        $fullPath = null;
     }
 
     if (!empty($errors)) {
@@ -76,7 +76,7 @@ if (isset($_POST["register"])) {
 
         if (empty($userByUsername) && empty($userByEmail)) {
 
-            $_POST['photo'] = $full_path;
+            $_POST['photo'] = $fullPath;
             $createUser = $modelUsers->createUser($_POST);
             $_SESSION["user_id"] = $user["user_id"];
             header("Location: " . ROOT . "/");

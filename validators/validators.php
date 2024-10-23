@@ -21,23 +21,23 @@ function dateValidator($birthdate)
 
 function imageValidator($image)
 {
-    $allowed_image_formats = [
+    $allowedImageFormats = [
         "image/jpeg" => ".jpg",
         "image/webp" => ".webp",
         "image/avif" => ".avif",
         "image/png" => ".png"
     ];
 
-    $max_image_size = 2 * 1024 * 1024;
+    $maxImageSize = 2 * 1024 * 1024;
 
-    $finfo = new finfo(FILEINFO_MIME_TYPE);
-    $media_type = $finfo->file($image['tmp_name']);
+    $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+    $mediaType = $fileInfo->file($image['tmp_name']);
 
-    if (!array_key_exists($media_type, $allowed_image_formats)) {
+    if (!array_key_exists($mediaType, $allowedImageFormats)) {
         return "Invalid image format.";
     }
 
-    if ($image['size'] > $max_image_size) {
+    if ($image['size'] > $maxImageSize) {
         return "Image size exceeds the 2MB limit.";
     }
 

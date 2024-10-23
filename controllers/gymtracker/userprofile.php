@@ -16,24 +16,24 @@ if (isset($_SESSION["user_id"])) {
 
         if (!empty($_FILES['photo']['tmp_name'])) {
 
-            $image_validation = imageValidator($_FILES['photo']);
+            $imageValidation = imageValidator($_FILES['photo']);
 
-            if ($image_validation === true) {
-                $allowed_image_formats = [
+            if ($imageValidation === true) {
+                $allowedImageFormats = [
                     "image/jpeg" => ".jpg",
                     "image/webp" => ".webp",
                     "image/avif" => ".avif",
                     "image/png" => ".png"
                 ];
 
-                $finfo = new finfo(FILEINFO_MIME_TYPE);
-                $media_type = $finfo->file($_FILES['photo']['tmp_name']);
+                $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+                $mediaType = $fileInfo->file($_FILES['photo']['tmp_name']);
 
-                $file_name =  date("Y-m-H-i-s") . "_" . bin2hex(random_bytes(16));
-                $file_extension = $allowed_image_formats[$media_type];
-                $full_path = "images/" . $file_name . $file_extension;
+                $fileName =  date("Y-m-H-i-s") . "_" . bin2hex(random_bytes(16));
+                $fileExtension = $allowedImageFormats[$mediaType];
+                $fullPath = "images/" . $fileName . $fileExtension;
 
-                if (!move_uploaded_file($_FILES['photo']['tmp_name'], $full_path)) {
+                if (!move_uploaded_file($_FILES['photo']['tmp_name'], $fullPath)) {
                     $errors[] = "Image processing failed.";
                 }
             } else {
@@ -41,17 +41,17 @@ if (isset($_SESSION["user_id"])) {
             }
         } else {
             $user = $modelUsers->getUserById($_SESSION["user_id"]);
-            $full_path = $user["photo"];
+            $fullPath = $user["photo"];
         }
 
         if (!empty($_POST["birthdate"])) {
-            $birthdate_validation = dateValidator($_POST["birthdate"]);
+            $birthdateValidation = dateValidator($_POST["birthdate"]);
         } else {
-            $errors[] = $birthdate_validation;
+            $errors[] = $birthdateValidation;
         }
 
         if (!empty($errors)) {
-            $message_profile = implode(';', $errors);
+            $messageProfile = implode(';', $errors);
         }
 
         if (
@@ -61,24 +61,28 @@ if (isset($_SESSION["user_id"])) {
             mb_strlen($_POST["username"]) <= 60 &&
             filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)
         ) {
-            $_POST['photo'] = $full_path;
+            $_POST['photo'] = $fullPath;
 
-            $user_updated = $modelUsers->updateUser($_POST, $_SESSION["user_id"]);
-            if ($user_updated) {
-                $message_profile = "Profile updated successfully.";
+            $userUpdated = $modelUsers->updateUser($_POST, $_SESSION["user_id"]);
+            if ($userUpdated) {
+                $messageProfile = "Profile updated successfully.";
             } else {
                 http_response_code(400);
-                $message_profile = "Failed to update profile.";
+                $messageProfile = "Failed to update profile.";
             }
         } else {
-            $message_profile = "Please, submit valid information.";
+            $messageProfile = "Please, submit valid information.";
         }
     }
 
     $user = $modelUsers->getUserById($_SESSION["user_id"]);
-    if (!$user) {
+    if ($user) {
+        $defaultPhoto = '/public/images/default-profile-icon.webp';
+        $user['photo'] = !empty($user['photo']) ? $user['photo'] : $defaultPhoto;
+    } else {
+
         http_response_code(404);
-        die("404: User not found.");
+        die("404: User not found");
     }
 
     require("views/gymtracker/userprofile.php");

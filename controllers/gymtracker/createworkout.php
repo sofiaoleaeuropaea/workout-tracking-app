@@ -38,15 +38,15 @@ if (isset($_SESSION["user_id"])) {
                 }
             }
 
-            $workout_plan_data = [
+            $workoutPlanData = [
                 'plan_name' => $_POST["plan_name"],
                 'plan_description' => $_POST["plan_description"],
                 'exercises' => $planExercises
             ];
 
-            $workout_plan = $modelWorkoutPlans->createWorkoutPlan($_SESSION["user_id"], $workout_plan_data);
+            $workoutPlan = $modelWorkoutPlans->createWorkoutPlan($_SESSION["user_id"], $workoutPlanData);
 
-            if ($workout_plan) {
+            if ($workoutPlan) {
                 header("Location: " . ROOT . "/gymtracker/createworkout/");
                 exit();
             } else {

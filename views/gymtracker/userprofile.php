@@ -8,6 +8,7 @@
     <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
+    <script src="/js/userdelete.js" defer></script>
 </head>
 
 <body>
@@ -15,10 +16,14 @@
     <main>
         <div class="container">
             <div class="userprofile_container">
+                <?php
+                if (isset($message)) {
+                    echo '<p role="alert">' . $message . '</p>';
+                } ?>
                 <div class="form_container">
                     <?php
-                    if (isset($message_profile)) {
-                        echo '<p role="alert">' . $message_profile . '</p>';
+                    if (isset($messageProfile)) {
+                        echo '<p role="alert">' . $messageProfile . '</p>';
                     }
                     echo '
                     <form method="POST" action="' . ROOT . '/gymtracker/userprofile/" enctype="multipart/form-data">
@@ -54,8 +59,8 @@
                 </div>
                 <div class="form_container">
                     <?php
-                    if (isset($message)) {
-                        echo '<p role="alert">' . $message . '</p>';
+                    if (isset($messageUpdatePassword)) {
+                        echo '<p role="alert">' . $messageUpdatePassword . '</p>';
                     }
                     echo '
                 <form method="POST" action="' . ROOT . '/gymtracker/userpassword/" enctype="multipart/form-data">
@@ -78,7 +83,27 @@
                 </div>
             </div>
             <div>
-                <a href="<?= ROOT ?> " class="btn">Delete account</a>
+                <button id="delete_account_btn" class="btn">Delete account</button>
+            </div>
+
+            <div id="delete_account_modal" class="modal" style="display: none;">
+                <div class="modal_content">
+
+                    <span class="close_modal">&times;</span>
+                    <h2>Confirm Account Deletion</h2>
+                    <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+                    <form id="delete_account_form" method="POST" action="<?= ROOT ?>/gymtracker/userdelete/">
+                        <div class="input_container">
+                            <label for="confirm_password" class="input_label">Confirm Password</label>
+                            <input id="confirm_password" class="input_field" type="password" name="confirm_password" required minlength="8" maxlength="1000" placeholder="********">
+                        </div>
+                        <p role="alert" id="delete_error_message" style="color: red;" hidden></p>
+
+                        <div>
+                            <button type="submit" name="delete_user" class="btn">Confirm Deletion</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </main>
