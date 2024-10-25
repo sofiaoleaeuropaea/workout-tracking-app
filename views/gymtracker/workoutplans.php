@@ -17,63 +17,101 @@
         <div class="container">
             <div class="workout_plan_container">
                 <section class="workout_plan_form">
+                    <a href="<?= ROOT ?>/gymtracker/createworkout/" class="btn">Create New Plan</a>
                     <div class="form_container">
-                        <h2>Create your workout</h2>
-                        <?php
-                        if (isset($message)) {
+                        <h2><?php echo isset($planId) ? 'Edit your workout' : 'Create your workout'; ?></h2>
+                        <?php if (isset($message)) {
                             echo '<p role="alert">' . $message . '</p>';
                         } ?>
-                        <form id="workout_form" method="POST" action="<?= ROOT ?>/gymtracker/createworkout/" enctype="multipart/form-data">
+
+                        <form id="workout_form" method="POST"
+                            action="<?= isset($planId) ? ROOT . '/gymtracker/createworkout/?edit_plan_id=' . $planId : ROOT . '/gymtracker/createworkout/' ?>"
+                            enctype="multipart/form-data">
+                            <?php if (isset($planId)) {
+                                echo '<input type="hidden" name="plan_id" value="' . $planId . '">';
+                            } ?>
+                            <!-- <input type="hidden" name="plan_id" value="<?= isset($planId) ? $planId : NULL; ?>"> -->
                             <div class="input_container">
-                                <label class="input_label" for="plan_name">Workout Plan Name:</label>
-                                <input class="input_field" type="text" id="plan_name" name="plan_name" required minlength="3" maxlength="100">
+                                <label class="input_label" for="plan_name">Name:</label>
+                                <input class="input_field" type="text" id="plan_name" name="plan_name" required minlength="3" maxlength="100" value="<?= isset($planName) ? $planName : ''; ?>">
                             </div>
                             <div class="input_container">
-                                <label class="input_label" for="plan_description">Workout Plan Description:</label>
-                                <textarea class="input_field" id="plan_description" name="plan_description" rows="4" cols="50"></textarea>
+                                <label class="input_label" for="plan_description">Description:</label>
+                                <textarea class="input_field" id="plan_description" name="plan_description" rows="4" cols="50"><?= isset($planDescription) ? $planDescription : ''; ?></textarea>
                             </div>
                             <div>
                                 <div id="exercise_list">
-                                    <div class="exercise_item">
-                                        <label class="input_label" for="workout_exercises">Select Exercises:</label>
-                                        <select class="input_field" name="exercises[0][exercise_id]" id="workout_exercises" required>
-                                            <option value="" disabled selected>Select an exercise</option>
-                                            <?php foreach ($exercises as $exercise) : ?>
-                                                <option value="<?= $exercise['exercise_id']; ?>">
-                                                    <?= $exercise['name']; ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
+                                    <?php if (isset($existingExercises) && count($existingExercises) > 0): ?>
+                                        <?php foreach ($existingExercises as $index => $exercise): ?>
+                                            <div class="exercise_item">
+                                                <label class="input_label" for="exercise_id_<?= $index; ?>">Select Exercises:</label>
+                                                <select class="input_field" name="exercises[<?= $index ?>][exercise_id]" id="exercise_id_<?= $index; ?>" required>
+                                                    <option value="" disabled <?= empty($exercise['exercise_id']) ? 'selected' : ''; ?>>Select an exercise</option>
+                                                    <?php foreach ($exercises as $availableExercise): ?>
+                                                        <option value="<?= $availableExercise['exercise_id']; ?>" <?= ($availableExercise['exercise_id'] == $exercise['exercise_id']) ? 'selected' : ''; ?>>
+                                                            <?= $availableExercise['name']; ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
 
-                                        <label for="sets">Sets:</label>
-                                        <input type="number" id="sets" name="exercises[0][sets]" min="1" required>
+                                                <label for="sets_<?= $index; ?>" class="input_label">Sets:</label>
+                                                <input type="number" class="input_field" id="sets_<?= $index; ?>" name="exercises[<?= $index ?>][sets]" min="1" value="<?= $exercise['sets']; ?>" required>
 
-                                        <label for="reps">Reps:</label>
-                                        <input type="number" id="reps" name="exercises[0][reps]" min="1" required>
+                                                <label for="reps_<?= $index; ?>" class="input_label">Reps:</label>
+                                                <input type="number" class="input_field" id="reps_<?= $index; ?>" name="exercises[<?= $index ?>][reps]" min="1" value="<?= $exercise['reps']; ?>" required>
+                                                <input type="hidden" name="exercises[<?= $index ?>][exercise_order]" value="<?= $index + 1; ?>">
 
-                                        <button type="button" class="remove_exercise btn">X</button>
-                                    </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <div class="exercise_item">
+                                            <label class="input_label" for="workout_exercises">Select Exercises:</label>
+                                            <select class="input_field" name="exercises[0][exercise_id]" id="workout_exercises" required>
+                                                <option value="" disabled selected>Select an exercise</option>
+                                                <?php foreach ($exercises as $exercise): ?>
+                                                    <option value="<?= $exercise['exercise_id']; ?>">
+                                                        <?= $exercise['name']; ?>
+                                                    </option>
+                                                <?php endforeach; ?>
+                                            </select>
+
+                                            <label for="sets" class="input_label">Sets:</label>
+                                            <input type="number" class="input_field" id="sets" name="exercises[0][sets]" min="1" required>
+
+                                            <label for="reps" class="input_label">Reps:</label>
+                                            <input type="number" class="input_field" id="reps" name="exercises[0][reps]" min="1" required>
+                                            <input type="hidden" name="exercises[0][exercise_order]" value="0">
+
+                                            <button type="button" class="remove_exercise btn">&times;</button>
+                                        </div>
+                                        <button type="button" id="add_exercise" class="btn">Add Exercise</button>
+                                    <?php endif; ?>
                                 </div>
 
-                                <button type="button" id="add_exercise" class="btn">Add Exercise</button>
                             </div>
                             <div>
-                                <button type="submit" name="save" class="btn">Save</button>
-                                <button type="button" id="btn_cancel" name="cancel" class="btn">Cancel</button>
+                                <button type="submit" name="save" class="btn"><?= isset($planId) ? 'Update' : 'Save'; ?></button>
+                                <?php
+                                if (isset($planId)) {
+                                    echo '<button type="button" id="btn_delete" name="delete" class="btn">Delete</button>';
+                                } else {
+                                    echo '<button type="button" id="btn_cancel" name="cancel" class="btn">Cancel</button>';
+                                }
+                                ?>
+
                             </div>
                         </form>
                     </div>
                 </section>
                 <section class="workout_plan_list">
-
                     <h3>Your Workout Plans</h3>
 
                     <?php if (!empty($workoutPlans)): ?>
                         <ul>
                             <?php foreach ($workoutPlans as $plan): ?>
                                 <li class="workout_plan">
-                                    <a href="<?= ROOT ?>/gymtracker/userworkouts.php?id=<?php echo $plan['id']; ?>">
-                                        <?php echo $plan['name']; ?>
+                                    <a href="<?= ROOT ?>/gymtracker/createworkout/?edit_plan_id=<?= $plan['id']; ?>">
+                                        <?= $plan['name']; ?>
                                     </a>
                                 </li>
                             <?php endforeach; ?>
@@ -81,7 +119,6 @@
                     <?php else: ?>
                         <p>No workout plans found.</p>
                     <?php endif; ?>
-
                 </section>
             </div>
         </div>

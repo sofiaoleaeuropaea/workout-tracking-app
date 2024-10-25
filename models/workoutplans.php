@@ -25,7 +25,15 @@ class WorkoutPlans extends Base
     {
         $query = $this->db->prepare("
         SELECT 
-            wp.plan_id AS id, wp.name AS plan_name, wp.description AS description, pe.plan_exercise_id, pe.exercise_order, pe.target_sets, pe.target_reps, e.exercise_name
+            wp.plan_id AS plan_id, 
+            wp.name AS plan_name, 
+            wp.description AS plan_description, 
+            pe.plan_exercise_id AS plan_exercise_id, 
+            pe.exercise_id AS exercise_id, 
+            pe.exercise_order, 
+            pe.target_sets AS target_sets, 
+            pe.target_reps AS target_reps, 
+            e.name AS exercise_name
         FROM 
             workout_plans AS wp
         LEFT JOIN 
@@ -34,7 +42,7 @@ class WorkoutPlans extends Base
             exercises AS e ON pe.exercise_id = e.exercise_id
         WHERE 
             wp.plan_id = ?
-        ");
+    ");
 
         $query->execute([$plan]);
 
@@ -69,8 +77,8 @@ class WorkoutPlans extends Base
                     $plan['plan_id'],
                     $exercise['exercise_id'],
                     $index + 1,
-                    $exercise['sets'],
-                    $exercise['reps']
+                    $exercise['target_sets'],
+                    $exercise['target_reps']
                 ]);
             }
 
@@ -79,6 +87,80 @@ class WorkoutPlans extends Base
             return $plan['plan_id'];
         } catch (PDOException $error) {
             $this->db->rollBack();
+            throw $error;
+        }
+    }
+
+    // public function updateWorkoutPlan($planData, $userID, $planId)
+    // {
+    //     try {
+    //         $query = $this->db->prepare("
+    //     UPDATE workout_plans
+    //     SET
+    //         name = ?,
+    //         description = ?
+    //     WHERE
+    //         plan_id = ? AND user_id = ?
+    // ");
+
+    //         $query->execute([
+    //             $planData["plan_name"],
+    //             $planData["plan_description"],
+    //             $planId,
+    //             $userID
+    //         ]);
+
+    //         $planData["user_id"] = $userID;
+    //         $planData["plan_id"] = $planId;
+
+    //         return $planData;
+    //     } catch (PDOException $error) {
+    //         echo $error;
+    //         throw $error;
+    //     }
+    // }
+
+    public function updateWorkoutPlan($planData, $userID, $planId)
+    {
+        try {
+            $this->db->beginTransaction();
+
+            $query = $this->db->prepare("
+            UPDATE workout_plans
+            SET
+                name = ?,
+                description = ?
+            WHERE
+                plan_id = ? AND user_id = ?
+        ");
+            $query->execute([
+                $planData["plan_name"],
+                $planData["plan_description"],
+                $planId,
+                $userID
+            ]);
+
+            foreach ($planData["exercises"] as $index => $exercise) {
+                $exerciseQuery = $this->db->prepare("
+                UPDATE plan_exercises 
+                SET
+                exercise_id = ?, target_sets = ?, target_reps = ?
+                 WHERE
+                plan_id = ?
+            ");
+                $exerciseQuery->execute([
+                    $exercise['exercise_id'],
+                    $exercise['target_sets'],
+                    $exercise['target_reps'],
+                    $planId
+                ]);
+            }
+
+            $this->db->commit();
+            return $planId;
+        } catch (PDOException $error) {
+            $this->db->rollBack();
+            echo $error->getMessage();
             throw $error;
         }
     }

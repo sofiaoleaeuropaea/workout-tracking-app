@@ -57,6 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
       exerciseItem.querySelector('select').selectedIndex = 0;
       exerciseItem.querySelector('input[name="exercises[0][sets]"]').value = '';
       exerciseItem.querySelector('input[name="exercises[0][reps]"]').value = '';
+      exerciseItem.querySelector(
+        'input[name="exercises[0][exercise_order]"]',
+      ).value = `${exerciseCount}`;
 
       exerciseItem.querySelector(
         `select[name="exercises[0][exercise_id]"]`,
@@ -69,6 +72,10 @@ document.addEventListener('DOMContentLoaded', () => {
       exerciseItem.querySelector(
         `input[name="exercises[0][reps]"]`,
       ).name = `exercises[${exerciseCount}][reps]`;
+
+      exerciseItem.querySelector(
+        `input[name="exercises[0][exercise_order]"]`,
+      ).name = `exercises[${exerciseCount}][exercise_order]`;
 
       exerciseList.appendChild(exerciseItem);
       exerciseCount++;
