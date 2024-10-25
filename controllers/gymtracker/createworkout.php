@@ -19,41 +19,86 @@ if (isset($_SESSION["user_id"])) {
             !empty($_POST["plan_name"]) &&
             mb_strlen($_POST["plan_name"]) >= 3 &&
             mb_strlen($_POST["plan_name"]) <= 100 &&
-            is_array($_POST["exercises"]) &&
-            count($_POST["exercises"]) > 0
+            is_array($_POST["exercises"])
         ) {
-            $planExercises = [];
 
+            $planExercises = [];
+            var_dump($_POST["exercises"]);
+            echo "<br>";
             foreach ($_POST["exercises"] as $exercise) {
                 if (
                     !empty($exercise["exercise_id"]) &&
                     isset($exercise["sets"]) && is_numeric($exercise["sets"]) &&
-                    isset($exercise["reps"]) && is_numeric($exercise["reps"])
+                    isset($exercise["reps"]) && is_numeric($exercise["reps"]) &&
+                    isset($exercise["exercise_order"]) && is_numeric($exercise["exercise_order"])
                 ) {
+
                     $planExercises[] = [
                         'exercise_id' => htmlspecialchars(strip_tags(trim($exercise["exercise_id"]))),
-                        'sets' => (int) $exercise["sets"],
-                        'reps' => (int) $exercise["reps"]
+                        'target_sets' => (int) $exercise["sets"],
+                        'target_reps' => (int) $exercise["reps"],
+                        'exercise_order' => (int) $exercise['exercise_order']
                     ];
                 }
             }
 
-            $workoutPlanData = [
-                'plan_name' => $_POST["plan_name"],
-                'plan_description' => $_POST["plan_description"],
-                'exercises' => $planExercises
-            ];
+            if (isset($_POST["plan_id"])) {
 
-            $workoutPlan = $modelWorkoutPlans->createWorkoutPlan($_SESSION["user_id"], $workoutPlanData);
+                $workoutPlanData = [
+                    'plan_name' => $_POST["plan_name"],
+                    'plan_description' => $_POST["plan_description"],
+                    'exercises' => $planExercises
+                ];
 
-            if ($workoutPlan) {
-                header("Location: " . ROOT . "/gymtracker/createworkout/");
-                exit();
+                $updatedWorkout = $modelWorkoutPlans->updateWorkoutPlan($workoutPlanData, $_SESSION["user_id"], (int)$_POST["plan_id"]);
+
+                if ($updatedWorkout) {
+                    $message = "Your plan is updated.";
+                } else {
+                    $message = "Error updating workout plan. Please try again.";
+                }
             } else {
-                $message = "Error creating workout plan. Please, try again.";
+                $workoutPlanCreate = [
+                    'plan_name' => $_POST["plan_name"],
+                    'plan_description' => $_POST["plan_description"],
+                    'exercises' => $planExercises
+                ];
+
+                $workoutPlan = $modelWorkoutPlans->createWorkoutPlan($_SESSION["user_id"], $workoutPlanCreate);
+
+                if ($workoutPlan) {
+                    header("Location: " . ROOT . "/gymtracker/createworkout/");
+                    exit();
+                } else {
+                    $message = "Error creating workout plan. Please try again.";
+                }
             }
         } else {
             $message = "Please provide a valid workout plan name and at least one exercise.";
+        }
+    }
+
+    if (isset($_GET['edit_plan_id'])) {
+
+        $planId = $_GET['edit_plan_id'];
+
+        $planDetails = $modelWorkoutPlans->getWorkoutPlansDetails($planId);
+
+        if ($planDetails) {
+            $planId = $planDetails[0]['plan_id'];
+            $planName = $planDetails[0]['plan_name'];
+            $planDescription = $planDetails[0]['plan_description'];
+            $existingExercises = [];
+
+            foreach ($planDetails as $exercise) {
+                $existingExercises[] = [
+                    'exercise_id' => $exercise['exercise_id'],
+                    'exercise_name' => $exercise['exercise_name'],
+                    'sets' => $exercise['target_sets'],
+                    'reps' => $exercise['target_reps'],
+                    'exercise_order' => $exercise['exercise_order']
+                ];
+            }
         }
     }
 
