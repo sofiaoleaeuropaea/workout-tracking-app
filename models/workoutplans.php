@@ -164,4 +164,14 @@ class WorkoutPlans extends Base
             throw $error;
         }
     }
+
+    public function deleteWorkoutPlan($planId)
+    {
+        $deleteQuery = $this->db->prepare("
+            DELETE FROM workout_plans
+            WHERE plan_id = ?
+        ");
+
+        return $deleteQuery->execute([$planId]);
+    }
 }

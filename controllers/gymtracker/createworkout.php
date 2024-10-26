@@ -53,7 +53,7 @@ if (isset($_SESSION["user_id"])) {
                 $updatedWorkout = $modelWorkoutPlans->updateWorkoutPlan($workoutPlanData, $_SESSION["user_id"], (int)$_POST["plan_id"]);
 
                 if ($updatedWorkout) {
-                    $message = "Your plan is updated.";
+                    $message = "Workout plan updated successfully!";
                 } else {
                     $message = "Error updating workout plan. Please try again.";
                 }

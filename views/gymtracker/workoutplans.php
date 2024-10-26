@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/workoutplan.js" defer></script>
+    <script src="/js/deleteworkout.js" defer></script>
 </head>
 
 <body>
