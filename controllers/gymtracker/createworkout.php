@@ -23,8 +23,6 @@ if (isset($_SESSION["user_id"])) {
         ) {
 
             $planExercises = [];
-            var_dump($_POST["exercises"]);
-            echo "<br>";
             foreach ($_POST["exercises"] as $exercise) {
                 if (
                     !empty($exercise["exercise_id"]) &&
