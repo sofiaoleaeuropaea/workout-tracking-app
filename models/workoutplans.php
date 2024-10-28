@@ -30,7 +30,7 @@ class WorkoutPlans extends Base
             wp.description AS plan_description, 
             pe.plan_exercise_id AS plan_exercise_id, 
             pe.exercise_id AS exercise_id, 
-            pe.exercise_order, 
+            pe.exercise_order AS exercise_order, 
             pe.target_sets AS target_sets, 
             pe.target_reps AS target_reps, 
             e.name AS exercise_name
@@ -91,34 +91,6 @@ class WorkoutPlans extends Base
         }
     }
 
-    // public function updateWorkoutPlan($planData, $userID, $planId)
-    // {
-    //     try {
-    //         $query = $this->db->prepare("
-    //     UPDATE workout_plans
-    //     SET
-    //         name = ?,
-    //         description = ?
-    //     WHERE
-    //         plan_id = ? AND user_id = ?
-    // ");
-
-    //         $query->execute([
-    //             $planData["plan_name"],
-    //             $planData["plan_description"],
-    //             $planId,
-    //             $userID
-    //         ]);
-
-    //         $planData["user_id"] = $userID;
-    //         $planData["plan_id"] = $planId;
-
-    //         return $planData;
-    //     } catch (PDOException $error) {
-    //         echo $error;
-    //         throw $error;
-    //     }
-    // }
 
     public function updateWorkoutPlan($planData, $userID, $planId)
     {
@@ -146,13 +118,14 @@ class WorkoutPlans extends Base
                 SET
                 exercise_id = ?, target_sets = ?, target_reps = ?
                  WHERE
-                plan_id = ?
+                plan_id = ? AND exercise_order = ?
             ");
                 $exerciseQuery->execute([
                     $exercise['exercise_id'],
                     $exercise['target_sets'],
                     $exercise['target_reps'],
-                    $planId
+                    $planId,
+                    $exercise['exercise_order']
                 ]);
             }
 
