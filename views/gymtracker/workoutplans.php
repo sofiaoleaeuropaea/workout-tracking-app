@@ -31,7 +31,6 @@
                             <?php if (isset($planId)) {
                                 echo '<input type="hidden" name="plan_id" value="' . $planId . '">';
                             } ?>
-                            <!-- <input type="hidden" name="plan_id" value="<?= isset($planId) ? $planId : NULL; ?>"> -->
                             <div class="input_container">
                                 <label class="input_label" for="plan_name">Name:</label>
                                 <input class="input_field" type="text" id="plan_name" name="plan_name" required minlength="3" maxlength="100" value="<?= isset($planName) ? $planName : ''; ?>">
@@ -55,10 +54,10 @@
                                                     <?php endforeach; ?>
                                                 </select>
 
-                                                <label for="sets_<?= $index; ?>" class="input_label">Sets:</label>
+                                                <label for="sets_<?= $index; ?>" class="input_label">Target Sets:</label>
                                                 <input type="number" class="input_field" id="sets_<?= $index; ?>" name="exercises[<?= $index ?>][sets]" min="1" value="<?= $exercise['sets']; ?>" required>
 
-                                                <label for="reps_<?= $index; ?>" class="input_label">Reps:</label>
+                                                <label for="reps_<?= $index; ?>" class="input_label">Target Reps:</label>
                                                 <input type="number" class="input_field" id="reps_<?= $index; ?>" name="exercises[<?= $index ?>][reps]" min="1" value="<?= $exercise['reps']; ?>" required>
                                                 <input type="hidden" name="exercises[<?= $index ?>][exercise_order]" value="<?= $index + 1; ?>">
 
@@ -76,10 +75,10 @@
                                                 <?php endforeach; ?>
                                             </select>
 
-                                            <label for="sets" class="input_label">Sets:</label>
+                                            <label for="sets" class="input_label">Target Sets:</label>
                                             <input type="number" class="input_field" id="sets" name="exercises[0][sets]" min="1" required>
 
-                                            <label for="reps" class="input_label">Reps:</label>
+                                            <label for="reps" class="input_label">Target Reps:</label>
                                             <input type="number" class="input_field" id="reps" name="exercises[0][reps]" min="1" required>
                                             <input type="hidden" name="exercises[0][exercise_order]" value="0">
 

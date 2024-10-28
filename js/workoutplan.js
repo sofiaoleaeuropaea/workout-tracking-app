@@ -77,7 +77,11 @@ document.addEventListener('DOMContentLoaded', () => {
         `input[name="exercises[0][exercise_order]"]`,
       ).name = `exercises[${exerciseCount}][exercise_order]`;
 
-      exerciseList.appendChild(exerciseItem);
+      const lastExerciseItem = exerciseList.querySelector(
+        '.exercise_item:last-of-type',
+      );
+      exerciseList.insertBefore(exerciseItem, lastExerciseItem.nextSibling);
+
       exerciseCount++;
 
       attachRemoveEvent();
