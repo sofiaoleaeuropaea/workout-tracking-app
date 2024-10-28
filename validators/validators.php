@@ -43,3 +43,11 @@ function imageValidator($image)
 
     return true;
 }
+
+function isValidDecimal($value)
+{
+    if (is_numeric($value)) {
+        return preg_match('/^\d{1,8}(\.\d{1,2})?$/', $value);
+    }
+    return false;
+}
