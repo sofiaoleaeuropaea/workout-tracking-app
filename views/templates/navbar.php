@@ -30,7 +30,7 @@
                             </a>
                         </li>
                         <li class="btn">
-                            <a href="<?= ROOT ?>/gymtracker/calendar/">
+                            <a href="<?= ROOT ?>/gymtracker/trainingschedule/">
                                 <i class="material-icons">calendar_today</i>
                             </a>
                         </li>
