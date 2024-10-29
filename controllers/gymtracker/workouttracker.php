@@ -32,16 +32,14 @@ if (isset($_SESSION["user_id"])) {
     }
 
     if (isset($_POST["submit"])) {
-        echo "<pre>";
-        var_dump($_POST);
-        echo "</pre>";
+
         foreach ($_POST as $key => $value) {
             if (!is_array($value)) {
                 $_POST[$key] = htmlspecialchars(strip_tags(trim($value)));
             }
         }
         if (
-            !empty($_POST["plan_exercise_id"]) && is_numeric($_POST["plan_exercise_id"]) &&
+            !empty($_POST["workout_plan"]) && is_numeric($_POST["workout_plan"]) &&
             !empty($_POST["date"]) && !empty($_POST["sets"]) && is_array($_POST["sets"])
         ) {
 
@@ -64,14 +62,14 @@ if (isset($_SESSION["user_id"])) {
                 'notes' => $_POST['notes'] ?? '',
                 'exercisesTracker' => $exerciseTracker
             ];
-            var_dump($trackerData);
 
-
-            $trackingId = $modelWorkoutTracker->createExerciseTracker($_SESSION["user_id"], (int)$_POST["plan_exercise_id"], $trackerData);
+            $trackingId = $modelWorkoutTracker->createExerciseTracker($_SESSION["user_id"], (int)$_POST["workout_plan"], $trackerData);
         }
     }
 
     $workoutPlans = $modelWorkoutPlans->getWorkoutPlansById($_SESSION["user_id"]);
+
+
     require("views/gymtracker/workouttracker.php");
 } else {
     http_response_code(403);
