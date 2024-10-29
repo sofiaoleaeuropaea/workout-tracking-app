@@ -21,8 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   deleteForm.addEventListener('formdata', (event) => {
-    console.log('formdata fired');
-
     const deleteFormData = event.formData;
 
     fetch('/gymtracker/userdelete/', {
@@ -32,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .then((response) => response.json())
       .then((result) => {
         if (result.success) {
-          alert(result.message);
           window.location.href = '/';
         } else {
           errorMessage.textContent = result.message;
