@@ -21,13 +21,14 @@
                     <h2 class="user_name">Welcome back, <?php echo $user['username']; ?>!</h2>
                 </div>
             </section>
-            <section>
+            <section class="form_container exercise_label">
                 <?php if (!empty($exercises)): ?>
-                    <h3>Today's plan: <?php echo $exercises[0]['plan_name']; ?></h3>
+                    <h3>Today's plan </h3>
+                    <h4><?php echo $exercises[0]['plan_name']; ?></h4>
                     <ul class="exercise-list">
                         <?php foreach ($exercises as $exercise): ?>
                             <li class="exercise-item">
-                                <?php echo $exercise['exercise_name']; ?>
+                                <span><?php echo $exercise['exercise_order']; ?>.</span> <?php echo $exercise['exercise_name']; ?>
                             </li>
                         <?php endforeach; ?>
                     </ul>

@@ -35,11 +35,6 @@
                             </a>
                         </li>
                         <li class="btn">
-                            <a href="<?= ROOT ?>/gymtracker/biometrics/">
-                                <i class="material-icons">insights</i>
-                            </a>
-                        </li>
-                        <li class="btn">
                             <a href="<?= ROOT ?>/gymtracker/userprofile/">
                                 <i class="material-icons">account_circle</i>
                             </a>

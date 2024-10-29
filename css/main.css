@@ -294,3 +294,72 @@ main {
   text-decoration: none;
   cursor: pointer;
 }
+
+.exercise-tracker_list {
+  border: 1px solid #21262e;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255);
+  overflow-y: auto;
+  max-height: 500px;
+  padding: 30px;
+}
+
+.workout_plan_details {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input_container {
+  flex: 1;
+}
+
+.input_container:first-child {
+  flex: 2;
+}
+
+.exercise_tracker_item {
+  display: flex;
+  border-bottom: 1px solid #eaeaea;
+  padding: 20px 0;
+}
+
+.exercise_tracker_item p {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.set_list {
+  border: 1px solid #21262e;
+  border-radius: 10px;
+  margin: 0 20px;
+}
+.set_list_table {
+  border-collapse: collapse;
+  margin: 0 8px;
+}
+.set_list_table th,
+.set_list_table td {
+  padding: 10px 12px;
+  text-align: center;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.set_list_table th {
+  font-weight: 500;
+}
+
+.set_list_table td {
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.set_list_table tr:last-child td {
+  border-bottom: none;
+}
+
+.exercise_label {
+  text-transform: capitalize;
+  display: inline-block;
+}

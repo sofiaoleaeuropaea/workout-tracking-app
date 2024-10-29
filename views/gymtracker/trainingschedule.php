@@ -25,17 +25,17 @@
     <main>
         <div class="container">
             <h2>Training Schedule</h2>
-            <section class="workout_selection">
+            <section class="workout_selection form_container">
                 <h3>Schedule your workouts</h3>
                 <?php
                 if (isset($message)) {
                     echo '<p role="alert">' . $message . '</p>';
                 }
                 ?>
-                <form id="add_to_calendar_form" method="POST" action="<?= ROOT ?>/gymtracker/trainingschedule">
+                <form id=" add_to_calendar_form" method="POST" action="<?= ROOT ?>/gymtracker/trainingschedule">
                     <div class="input_container">
-                        <label for="workout_plan">Workout Plans:</label>
-                        <select name="workout_plan_id" id="workout_plan" required>
+                        <label for="workout_plan" class="input_label">Workout Plans:</label>
+                        <select name="workout_plan_id" id="workout_plan" class="input_field" required>
                             <option value="" disabled selected>Select a workout plan</option>
                             <?php foreach ($workoutPlans as $plan): ?>
                                 <option value="<?= $plan['id']; ?>">
@@ -46,8 +46,8 @@
                     </div>
 
                     <div class="input_container">
-                        <label for="calendar_date">Select Date:</label>
-                        <input type="date" id="calendar_date" name="calendar_date" required>
+                        <label for="calendar_date" class="input_label">Select Date:</label>
+                        <input type="date" id="calendar_date" class="input_field" name="calendar_date" required>
                     </div>
 
                     <button type="submit" name="submit" class="btn">Add to Calendar</button>
@@ -55,10 +55,10 @@
 
             </section>
 
-            <section class="calendar_section">
+            <!-- <section class="calendar_section">
                 <h3>Your Calendar</h3>
                 <div id="calendar"></div>
-            </section>
+            </section> -->
         </div>
     </main>
 </body>
