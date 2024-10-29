@@ -18,7 +18,7 @@
         <div class="container">
             <div class="workout_plan_container">
                 <section class="workout_plan_form">
-                    <a href="<?= ROOT ?>/gymtracker/createworkout/" class="btn">Create New Plan</a>
+                    <a href="/gymtracker/createworkout/" class="btn">Create New Plan</a>
                     <div class="form_container">
                         <h2><?php echo isset($planId) ? 'Edit your workout' : 'Create your workout'; ?></h2>
                         <?php if (isset($message)) {
@@ -41,19 +41,11 @@
                             </div>
                             <div>
                                 <div id="exercise_list">
+                                    <label class="input_label" for="exercise_name_<?= $index; ?>">Exercises:</label>
                                     <?php if (isset($existingExercises) && count($existingExercises) > 0): ?>
                                         <?php foreach ($existingExercises as $index => $exercise): ?>
                                             <div class="exercise_item">
-                                                <label class="input_label" for="exercise_id_<?= $index; ?>">Select Exercises:</label>
-                                                <select class="input_field" name="exercises[<?= $index ?>][exercise_id]" id="exercise_id_<?= $index; ?>" required>
-                                                    <option value="" disabled <?= empty($exercise['exercise_id']) ? 'selected' : ''; ?>>Select an exercise</option>
-                                                    <?php foreach ($exercises as $availableExercise): ?>
-                                                        <option value="<?= $availableExercise['exercise_id']; ?>" <?= ($availableExercise['exercise_id'] == $exercise['exercise_id']) ? 'selected' : ''; ?>>
-                                                            <?= $availableExercise['name']; ?>
-                                                        </option>
-                                                    <?php endforeach; ?>
-                                                </select>
-
+                                                <input type="text" id="exercise_name_<?= $index; ?>" class="input_field" value="<?= $exercise['exercise_name']; ?>" disabled>
                                                 <label for="sets_<?= $index; ?>" class="input_label">Target Sets:</label>
                                                 <input type="number" class="input_field" id="sets_<?= $index; ?>" name="exercises[<?= $index ?>][sets]" min="1" value="<?= $exercise['sets']; ?>" required>
 
@@ -65,7 +57,6 @@
                                         <?php endforeach; ?>
                                     <?php else: ?>
                                         <div class="exercise_item">
-                                            <label class="input_label" for="workout_exercises">Select Exercises:</label>
                                             <select class="input_field" name="exercises[0][exercise_id]" id="workout_exercises" required>
                                                 <option value="" disabled selected>Select an exercise</option>
                                                 <?php foreach ($exercises as $exercise): ?>
@@ -110,7 +101,7 @@
                         <ul>
                             <?php foreach ($workoutPlans as $plan): ?>
                                 <li class="workout_plan">
-                                    <a href="<?= ROOT ?>/gymtracker/createworkout/?edit_plan_id=<?= $plan['id']; ?>">
+                                    <a href="/gymtracker/createworkout/?edit_plan_id=<?= $plan['id']; ?>">
                                         <?= $plan['name']; ?>
                                     </a>
                                 </li>
