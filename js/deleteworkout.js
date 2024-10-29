@@ -20,10 +20,14 @@ document.addEventListener('DOMContentLoaded', function () {
         })
           .then((response) => {
             if (response.status === 200) {
-              window.location.href = '/gymtracker/createworkout/';
+              return response.json();
             } else {
-              throw new Error('Failed to delete');
+              throw new Error('Failed to delete workout plan');
             }
+          })
+          .then((response) => {
+            alert(response.message);
+            window.location.href = '/gymtracker/createworkout/';
           })
           .catch((error) => {
             console.error('Error:', error);
