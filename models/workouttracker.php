@@ -41,6 +41,27 @@ class WorkoutTracker extends Base
         return $query->fetchAll();
     }
 
+    public function getExerciseTrackerByDate($userId)
+    {
+        $query = $this->db->prepare("
+       SELECT
+            wp.name AS plan_name, 
+            et.tracking_id AS tracking_id,
+            et.date AS tracking_date,
+            et.notes AS tracking_notes
+        FROM 
+            workout_plans AS wp
+        LEFT JOIN 
+            exercise_tracking AS et ON et.plan_id = wp.plan_id
+        WHERE 
+            et.user_id = ?
+    ");
+
+        $query->execute([$userId]);
+
+        return $query->fetchAll();
+    }
+
     public function createExerciseTracker($user, $planId, $trackerData)
     {
         $this->db->beginTransaction();

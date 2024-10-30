@@ -29,11 +29,34 @@ class trainingSchedule extends Base
     {
         $query = $this->db->prepare("
       SELECT 
+            ts.schedule_id AS schedule_id,
+            ts.schedule_date AS schedule_date,
+            wp.name AS plan_name,
+            wp.description AS plan_description
+        FROM 
+            training_schedule ts
+        LEFT JOIN 
+            workout_plans AS wp ON ts.plan_id = wp.plan_id
+        WHERE 
+            ts.user_id = :user_id
+        ");
+
+        $query->execute(['user_id' => $userId]);
+        $results = $query->fetchAll();
+
+        return $results;
+    }
+
+    public function getTrainingScheduleByCurrDate($userId)
+    {
+        $query = $this->db->prepare("
+      SELECT 
             ts.schedule_id,
             ts.schedule_date,
             wp.name AS plan_name,
             wp.description AS plan_description,
             pe.plan_exercise_id,
+            pe.exercise_order AS exercise_order,
             pe.exercise_id,
             e.name AS exercise_name
         FROM 

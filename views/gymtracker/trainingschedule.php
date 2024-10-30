@@ -8,13 +8,13 @@
     <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
-    <script src="/js/calendar.js" defer></script>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.2/main.min.css' rel='stylesheet' />
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.10.2/main.min.js'></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+
+    <script src="/js/trainingschedule.js"></script>
     <style>
         #calendar {
-            max-width: 900px;
+            max-width: 600px;
             margin: 0 auto;
         }
     </style>
@@ -55,10 +55,10 @@
 
             </section>
 
-            <!-- <section class="calendar_section">
-                <h3>Your Calendar</h3>
+            <section class="calendar_section form_container">
+
                 <div id="calendar"></div>
-            </section> -->
+            </section>
         </div>
     </main>
 </body>
