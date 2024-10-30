@@ -10,14 +10,8 @@
     <link rel="stylesheet" href="/css/main.css">
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-
     <script src="/js/trainingschedule.js"></script>
-    <style>
-        #calendar {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-    </style>
+
 </head>
 
 <body>

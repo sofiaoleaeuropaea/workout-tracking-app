@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
       right: 'prev,next today',
       center: 'dayGridMonth,timeGridWeek',
     },
+    displayEventTime: false,
     eventSources: [
       {
         url: '/gymtracker/completedworkouts/',
