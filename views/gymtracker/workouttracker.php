@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
     <script src="/js/workouttracker.js" defer></script>
+    <script src="/js/workouttrackerdetails.js" defer></script>
 </head>
 
 <body>
@@ -16,8 +17,8 @@
 
     <main>
         <div class="container">
-            <h2>Gym Tracker</h2>
             <div class="form_container">
+                <h2>Gym Tracker</h2>
                 <?php
                 if (isset($message)) {
                     echo '<p role="alert">' . $message . '</p>';
@@ -51,6 +52,19 @@
                     <button type="submit" name="submit" class="btn">Submit</button>
                 </form>
             </div>
+            <div>
+                <h2>Previous Workouts</h2>
+                <select class="input_field" id="get_plan_tracker" name="get_plan_tracker" required>
+                    <option value="" disabled selected>Select a workout plan</option>
+                    <?php foreach ($workoutPlans as $plan) : ?>
+                        <option value="<?= $plan['id']; ?>"><?= $plan['name']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <div id="plan-tracker_card"></div>
+
+            </div>
+
         </div>
     </main>
 </body>
