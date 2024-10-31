@@ -8,8 +8,8 @@
                     <?php
                     if (!isset($_SESSION["user_id"])) {
                     ?>
-                        <li class="btn"><a href="<?= ROOT ?>/">About us</a></li>
-                        <li class="btn"><a href="<?= ROOT ?>/">Contacts</a></li>
+                        <li class="btn"><a href="<?= ROOT ?>/about">About us</a></li>
+                        <li class="btn"><a href="<?= ROOT ?>/contacts">Contacts</a></li>
                         <li class="btn"><a href="<?= ROOT ?>/gymtracker/login">Login</a></li>
                     <?php
                     } else {
