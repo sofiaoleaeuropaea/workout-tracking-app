@@ -27,7 +27,7 @@
                     }
                     echo '
                     <form method="POST" action="' . ROOT . '/gymtracker/userprofile/" enctype="multipart/form-data">
-                    <div>';
+                        <div>';
 
                     if (!empty($user["photo"])) {
                         echo '<img src="' . ROOT . $user["photo"] . '" alt="Profile Photo" class="profile-photo">';
@@ -59,6 +59,7 @@
                 </div>
                 <div class="form_container">
                     <?php
+
                     if (isset($messageUpdatePassword)) {
                         echo '<p role="alert">' . $messageUpdatePassword . '</p>';
                     }
