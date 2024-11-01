@@ -22,8 +22,10 @@ if (isset($_SESSION["user_id"])) {
             $scheduledDate = $_POST["calendar_date"];
 
             $scheduleId = $modelTrainingSchedule->createTrainingSchedule($_SESSION["user_id"], $workoutPlanId, $scheduledDate);
-
-            $message = "Workout added to calendar successfully!";
+        }
+        if (!empty($scheduleId)) {
+            header("Location: " . ROOT . "/gymtracker/trainingschedule/");
+            exit();
         } else {
             $message = "Please select a workout plan and enter a valid date.";
         }
