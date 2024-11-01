@@ -13,13 +13,14 @@ $messageNotFound = '{"message": "404 Not Found"}';
 if (isset($_SESSION["user_id"])) {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST["submit"])) {
+
         header('Content-Type: application/json');
         $input = json_decode(file_get_contents("php://input"), true);
 
         if (isset($input['plan_id']) && is_numeric($input['plan_id'])) {
             $planId = $input['plan_id'];
 
-            $workoutPlans = $modelWorkoutPlans->getWorkoutPlansById($_SESSION["user_id"]);
+            // $workoutPlans = $modelWorkoutPlans->getWorkoutPlansById($_SESSION["user_id"]);
 
             $exercises = $modelWorkoutPlans->getWorkoutPlansDetails($planId);
 
@@ -38,6 +39,7 @@ if (isset($_SESSION["user_id"])) {
                 $_POST[$key] = htmlspecialchars(strip_tags(trim($value)));
             }
         }
+
         if (
             !empty($_POST["workout_plan"]) && is_numeric($_POST["workout_plan"]) &&
             !empty($_POST["date"]) && !empty($_POST["sets"]) && is_array($_POST["sets"])
@@ -64,11 +66,11 @@ if (isset($_SESSION["user_id"])) {
             ];
 
             $trackingId = $modelWorkoutTracker->createExerciseTracker($_SESSION["user_id"], (int)$_POST["workout_plan"], $trackerData);
+            header("Location: " . ROOT . "/gymtracker/workouttracker/");
         }
     }
 
     $workoutPlans = $modelWorkoutPlans->getWorkoutPlansById($_SESSION["user_id"]);
-
 
     require("views/gymtracker/workouttracker.php");
 } else {

@@ -21,7 +21,7 @@ class WorkoutPlans extends Base
         return $query->fetchAll();
     }
 
-    public function getWorkoutPlansDetails($plan)
+    public function getWorkoutPlansDetails($planId)
     {
         $query = $this->db->prepare("
         SELECT 
@@ -44,7 +44,7 @@ class WorkoutPlans extends Base
             wp.plan_id = ?
     ");
 
-        $query->execute([$plan]);
+        $query->execute([$planId]);
 
         return $query->fetchAll();
     }

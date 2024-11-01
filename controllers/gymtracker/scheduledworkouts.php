@@ -3,8 +3,6 @@ require("models/trainingschedule.php");
 
 $modelTrainingCalendar = new trainingSchedule();
 
-$messageWrongInfo = '{"message": "Incorrect information"}';
-
 if (isset($_SESSION["user_id"])) {
 
     header("Content-Type: application/json");
@@ -24,5 +22,5 @@ if (isset($_SESSION["user_id"])) {
     echo json_encode($events);
 } else {
     http_response_code(403);
-    echo $messageError;
+    die("403: Access denied");
 }

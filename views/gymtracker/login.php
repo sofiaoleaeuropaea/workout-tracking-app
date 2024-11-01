@@ -20,7 +20,7 @@
             ?>
             <form method="POST" action="<?= ROOT ?>/gymtracker/login/">
                 <div class="input_container">
-                    <label for="input_email" class="input_label">Emaill</label>
+                    <label for="input_email" class="input_label">Email</label>
                     <input id="input_email" class="input_field" type="email" name="email" required>
                 </div>
                 <div class="input_container">
