@@ -76,7 +76,7 @@ class Users extends Base
            (is_admin, name, username, email, password_hash, refresh_token, birth_date, photo)
         VALUES(?, ?, ?, ?, ?, ?, ?, ?)
         ");
-        // mudar o valor hardcoded de is_admin
+
         $query->execute([
             0,
             $user["name"],
@@ -148,13 +148,11 @@ class Users extends Base
         ");
 
         $query->execute([
-            password_hash($user_data["new_password"], PASSWORD_DEFAULT),
+            password_hash($user_data, PASSWORD_DEFAULT),
             $id
         ]);
 
-        $user_data["user_id"] = $id;
-
-        return $user_data;
+        return $id;
     }
 
     public function deleteUser($user)

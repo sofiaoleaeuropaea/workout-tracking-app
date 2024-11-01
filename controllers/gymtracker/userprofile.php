@@ -13,76 +13,63 @@ if (isset($_SESSION["user_id"])) {
         }
 
         $errors = [];
+        if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            $allowedImageFormats = [
+                ".jpg" => "image/jpeg",
+                ".webp" => "image/webp",
+                ".avif" => "image/avif",
+                ".png" => "image/png"
+            ];
 
-        if (!empty($_FILES['photo']['tmp_name'])) {
-
-            $imageValidation = imageValidator($_FILES['photo']);
+            $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+            $mediaType = $fileInfo->file($_FILES['photo']['tmp_name']);
+            $imageValidation = imageValidator($mediaType, $allowedImageFormats, $_FILES['photo']);
 
             if ($imageValidation === true) {
-                $allowedImageFormats = [
-                    "image/jpeg" => ".jpg",
-                    "image/webp" => ".webp",
-                    "image/avif" => ".avif",
-                    "image/png" => ".png"
-                ];
+                $fileName = date("Y-m-H-i-s") . "_" . bin2hex(random_bytes(16));
+                $fileExtension = array_search($mediaType, $allowedImageFormats);
 
-                $fileInfo = new finfo(FILEINFO_MIME_TYPE);
-                $mediaType = $fileInfo->file($_FILES['photo']['tmp_name']);
+                $fullPath = "images/userprofile/" . $fileName . $fileExtension;
 
-                $fileName =  date("Y-m-H-i-s") . "_" . bin2hex(random_bytes(16));
-                $fileExtension = $allowedImageFormats[$mediaType];
-                $fullPath = "images/" . $fileName . $fileExtension;
-
-                if (!move_uploaded_file($_FILES['photo']['tmp_name'], $fullPath)) {
-                    $errors[] = "Image processing failed.";
-                }
+                move_uploaded_file($_FILES['photo']['tmp_name'], $fullPath);
             } else {
-                $errors[] = $image_validation;
+                $errors[] = $imageValidation;
+                $user = $modelUsers->getUserById($_SESSION["user_id"]);
             }
         } else {
             $user = $modelUsers->getUserById($_SESSION["user_id"]);
             $fullPath = $user["photo"];
         }
 
-        if (!empty($_POST["birthdate"])) {
-            $birthdateValidation = dateValidator($_POST["birthdate"]);
-        } else {
-            $errors[] = $birthdateValidation;
-        }
+        $ageValidation = ageLimitValidator($_POST["birthdate"]);
 
-        if (!empty($errors)) {
-            $messageProfile = implode(';', $errors);
+        if ($ageValidation !== true) {
+            $errors[] = $ageValidation;
         }
 
         if (
-            mb_strlen($_POST["name"]) >= 3 &&
-            mb_strlen($_POST["name"]) <= 100 &&
-            mb_strlen($_POST["username"]) >= 3 &&
-            mb_strlen($_POST["username"]) <= 60 &&
-            filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)
+            mb_strlen($_POST["name"]) < 3 || mb_strlen($_POST["name"]) > 100 ||
+            mb_strlen($_POST["username"]) < 3 || mb_strlen($_POST["username"]) > 60 ||
+            !filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)
         ) {
-            $_POST['photo'] = $fullPath;
+            $errors[] = "Please, submit valid information.";
+        }
 
-            $userUpdated = $modelUsers->updateUser($_POST, $_SESSION["user_id"]);
-            if ($userUpdated) {
-                $messageProfile = "Profile updated successfully.";
-            } else {
-                http_response_code(400);
-                $messageProfile = "Failed to update profile.";
-            }
+        if (!empty($errors)) {
+            $messageProfile = implode('; ', $errors);
+            require("views/gymtracker/userprofile.php");
         } else {
-            $messageProfile = "Please, submit valid information.";
+            $_POST['photo'] = $fullPath;
+            $userUpdated = $modelUsers->updateUser($_POST, $_SESSION["user_id"]);
+            header("Location: "  . ROOT . "/gymtracker/userprofile/?success_profile=true");
+            exit();
         }
     }
 
     $user = $modelUsers->getUserById($_SESSION["user_id"]);
     if ($user) {
         $defaultPhoto = '/public/images/default-profile-icon.webp';
-        $user['photo'] = !empty($user['photo']) ? $user['photo'] : $defaultPhoto;
-    } else {
-
-        http_response_code(404);
-        die("404: User not found");
+        $user['photo'] = !empty($user['photo']) ? '/' . ltrim($user['photo'], '/') : $defaultPhoto;
     }
 
     require("views/gymtracker/userprofile.php");

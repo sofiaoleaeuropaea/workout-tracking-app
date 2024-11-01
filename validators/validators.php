@@ -2,38 +2,31 @@
 
 function dateValidator($birthdate)
 {
-    $dateParts = explode('-', $birthdate);
-
-    if (count($dateParts) == 3) {
-        $year = (int)$dateParts[0];
-        $month = (int)$dateParts[1];
-        $day = (int)$dateParts[2];
-
-        if (checkdate($month, $day, $year)) {
-            return true;
-        } else {
-            return "Please, enter a valid birthdate.";
-        }
-    } else {
-        return "Please, enter a valid birthdate.";
-    }
+    if (empty($birthdate)) {
+        return 'Please submit your date of birth.';
+    } elseif (!preg_match('~^([0-9]{2})/([0-9]{2})/([0-9]{4})$~', $birthdate, $parts)) {
+        return 'Please return a date in the format MM/DD/YYYY.';
+    } elseif (!checkdate($parts[1], $parts[2], $parts[3])) {
+        return 'The date of birth is invalid.';
+    } else return true;
 }
 
-function imageValidator($image)
+function ageLimitValidator($birthdate)
 {
-    $allowedImageFormats = [
-        "image/jpeg" => ".jpg",
-        "image/webp" => ".webp",
-        "image/avif" => ".avif",
-        "image/png" => ".png"
-    ];
+    $age =  new DateTime($birthdate);
+    $lowerLimit = new DateInterval('P120Y');
+    $maxDobLimit = (new DateTime())->sub($lowerLimit);
 
+    if ($age <= $maxDobLimit) {
+        return 'Really! Are you still alive?';
+    } else return true;
+}
+
+function imageValidator($mediaType, $allowedImageFormats, $image)
+{
     $maxImageSize = 2 * 1024 * 1024;
 
-    $fileInfo = new finfo(FILEINFO_MIME_TYPE);
-    $mediaType = $fileInfo->file($image['tmp_name']);
-
-    if (!array_key_exists($mediaType, $allowedImageFormats)) {
+    if (!in_array($mediaType, $allowedImageFormats)) {
         return "Invalid image format.";
     }
 
