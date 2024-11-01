@@ -5,7 +5,7 @@ $modelWorkoutPlans = new WorkoutPlans();
 header("Content-Type: application/json");
 
 $messageError = '{"message": "400 Bad Request"}';
-$messageWrongInfo = '{"message": "Incorrect information"}';
+$messageSuccess = '{"message": "Workoutplan deleted"}';
 
 if (isset($_SESSION["user_id"])) {
 
@@ -17,16 +17,17 @@ if (isset($_SESSION["user_id"])) {
 
             $planDeleted = $modelWorkoutPlans->deleteWorkoutPlan($body['plan_id']);
 
-            if ($planDeleted) {
+            if (!empty($planDeleted)) {
                 http_response_code(200);
+                echo $messageSuccess;
                 exit();
             }
         } else {
             http_response_code(400);
-            echo $messageWrongInfo;
+            echo $messageError;
         }
     }
 } else {
     http_response_code(403);
-    echo $messageError;
+    die("403: Access denied");
 }

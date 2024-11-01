@@ -27,7 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
       method: 'POST',
       body: deleteFormData,
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 200) {
+          return response.json();
+        } else {
+          throw new Error('Failed to delete your account. Please, try again.');
+        }
+      })
       .then((result) => {
         if (result.success) {
           window.location.href = '/';

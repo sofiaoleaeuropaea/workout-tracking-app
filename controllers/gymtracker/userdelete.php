@@ -6,7 +6,7 @@ $modelUsers = new Users();
 header("Content-Type: application/json");
 
 $messagePasswordRequired = 'Please, enter your password.';
-$messagePasswordIncorrect = 'Your password is incorrect.';
+$messagePasswordIncorrect = 'Password incorrect.';
 $messageUserDeleted = 'Your information has been deleted. We will miss you!';
 $messageError = 'Failed to delete your account. Please, try again.';
 
@@ -15,7 +15,7 @@ if (isset($_SESSION["user_id"])) {
 
         $user = $modelUsers->getUserById($_SESSION["user_id"]);
 
-        $confirmPassword = $_POST["confirm_password"] ?? '';
+        $confirmPassword = $_POST["confirm_password"];
 
         if (empty($confirmPassword)) {
             echo json_encode(['success' => false, 'message' => $messagePasswordRequired]);
@@ -30,7 +30,7 @@ if (isset($_SESSION["user_id"])) {
 
             if ($userDelete) {
                 session_destroy();
-                echo json_encode(['success' => true, 'message' => $messageUserDeleted]);
+                echo json_encode(['success' => true]);
                 http_response_code(200);
                 exit();
             } else {
@@ -41,7 +41,6 @@ if (isset($_SESSION["user_id"])) {
         }
     }
 } else {
-    echo json_encode(['success' => false, 'message' => 'Access denied']);
     http_response_code(403);
-    exit();
+    die("403: Access denied");
 }
