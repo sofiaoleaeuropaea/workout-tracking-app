@@ -13,6 +13,10 @@ if (isset($_SESSION["user_id"])) {
         }
 
         $errors = [];
+        $user = $modelUsers->getUserById($_SESSION["user_id"]);
+
+        $previousPhotoPath = $user['photo'] ?? null;
+
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
             $allowedImageFormats = [
                 ".jpg" => "image/jpeg",
@@ -31,6 +35,10 @@ if (isset($_SESSION["user_id"])) {
 
                 $fullPath = "images/userprofile/" . $fileName . $fileExtension;
 
+                if ($previousPhotoPath && file_exists($previousPhotoPath)) {
+                    unlink($previousPhotoPath);
+                }
+
                 move_uploaded_file($_FILES['photo']['tmp_name'], $fullPath);
             } else {
                 $errors[] = $imageValidation;
@@ -38,7 +46,7 @@ if (isset($_SESSION["user_id"])) {
             }
         } else {
             $user = $modelUsers->getUserById($_SESSION["user_id"]);
-            $fullPath = $user["photo"];
+            $fullPath = $previousPhotoPath;
         }
 
         $ageValidation = ageLimitValidator($_POST["birthdate"]);
@@ -56,7 +64,7 @@ if (isset($_SESSION["user_id"])) {
         }
 
         if (!empty($errors)) {
-            $messageProfile = implode('; ', $errors);
+            $messageProfile = implode('<br>', $errors);
             require("views/gymtracker/userprofile.php");
         } else {
             $_POST['photo'] = $fullPath;
@@ -68,7 +76,7 @@ if (isset($_SESSION["user_id"])) {
 
     $user = $modelUsers->getUserById($_SESSION["user_id"]);
     if ($user) {
-        $defaultPhoto = '/public/images/default-profile-icon.webp';
+        $defaultPhoto = '/images/userprofile/default-profile-icon.webp';
         $user['photo'] = !empty($user['photo']) ? '/' . ltrim($user['photo'], '/') : $defaultPhoto;
     }
 
