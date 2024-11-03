@@ -1,0 +1,13 @@
+{
+  "name": "sofiaoliveira/htdocs",
+  "require": {
+    "phpmailer/phpmailer": "^6.9"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sofia Oliveira",
+      "email": "ironclad.096@gmail.com"
+    }
+  ]
+}
