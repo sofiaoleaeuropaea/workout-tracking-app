@@ -8,7 +8,7 @@
     <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
-    <script src="/js/workoutplan.js" defer></script>
+    <script src="/js/createworkout.js" defer></script>
     <script src="/js/deleteworkout.js" defer></script>
 </head>
 
@@ -41,10 +41,11 @@
                             </div>
                             <div>
                                 <div id="exercise_list">
-                                    <label class="input_label" for="exercise_name_<?= $index; ?>">Exercises:</label>
+                                    <p class="input_label">Exercises:</p>
                                     <?php if (isset($existingExercises) && count($existingExercises) > 0): ?>
                                         <?php foreach ($existingExercises as $index => $exercise): ?>
                                             <div class="exercise_item">
+
                                                 <input type="text" id="exercise_name_<?= $index; ?>" class="input_field" value="<?= $exercise['exercise_name']; ?>" disabled>
                                                 <label for="sets_<?= $index; ?>" class="input_label">Target Sets:</label>
                                                 <input type="number" class="input_field" id="sets_<?= $index; ?>" name="exercises[<?= $index ?>][sets]" min="1" value="<?= $exercise['sets']; ?>" required>
@@ -85,8 +86,6 @@
                                 <?php
                                 if (isset($planId)) {
                                     echo '<button type="button" id="btn_delete" name="delete" class="btn">Delete</button>';
-                                } else {
-                                    echo '<button type="button" id="btn_cancel" name="cancel" class="btn">Cancel</button>';
                                 }
                                 ?>
 

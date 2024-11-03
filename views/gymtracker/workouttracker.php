@@ -8,7 +8,7 @@
     <link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/css/main.css">
-    <script src="/js/workouttracker.js" defer></script>
+    <script src="/js/workouttrackercreate.js" defer></script>
     <script src="/js/workouttrackerdetails.js" defer></script>
 </head>
 
