@@ -10,32 +10,32 @@
                     ?>
                         <li class="btn"><a href="<?= ROOT ?>/about">About us</a></li>
                         <li class="btn"><a href="<?= ROOT ?>/contacts">Contacts</a></li>
-                        <li class="btn"><a href="<?= ROOT ?>/gymtracker/login">Login</a></li>
+                        <li class="btn"><a href="<?= ROOT ?>/gymtracker/login/">Login</a></li>
                     <?php
                     } else {
                     ?>
                         <li class="btn">
                             <a href="<?= ROOT ?>/gymtracker/dashboard/">
-                                <i class="material-icons">dashboard</i>
+                                <i class="material-icons">space_dashboard</i>
                             </a>
                         </li>
                         <li class="btn">
-                            <a href="<?= ROOT ?>/gymtracker/createworkout/">
+                            <a href="<?= ROOT ?>/gymtracker/create-workout/">
                                 <i class="material-icons">fitness_center</i>
                             </a>
                         </li>
                         <li class="btn">
-                            <a href="<?= ROOT ?>/gymtracker/workouttracker/">
+                            <a href="<?= ROOT ?>/gymtracker/workout-tracker/">
                                 <i class="material-icons">track_changes</i>
                             </a>
                         </li>
                         <li class="btn">
-                            <a href="<?= ROOT ?>/gymtracker/trainingschedule/">
+                            <a href="<?= ROOT ?>/gymtracker/training-schedule/">
                                 <i class="material-icons">calendar_today</i>
                             </a>
                         </li>
                         <li class="btn">
-                            <a href="<?= ROOT ?>/gymtracker/userprofile/">
+                            <a href="<?= ROOT ?>/gymtracker/user-profile/">
                                 <i class="material-icons">account_circle</i>
                             </a>
                         </li>
