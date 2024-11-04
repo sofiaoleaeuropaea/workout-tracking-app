@@ -1,6 +1,8 @@
 <?php
 require("models/users.php");
 
+$modelUsers = new Users();
+
 if (isset($_POST["submit"])) {
 
     foreach ($_POST as $key => $value) {
@@ -15,10 +17,9 @@ if (isset($_POST["submit"])) {
         filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)
     ) {
 
-        $modelUsers = new Users();
         $user = $modelUsers->loginUser($_POST["email"]);
 
-        if (!empty($user) &&  password_verify($_POST["password"], $user["password_hash"])) {
+        if (!empty($user) && password_verify($_POST["password"], $user["password_hash"])) {
 
             $_SESSION["user_id"] = $user["user_id"];
             header("Location: " . ROOT . "/gymtracker/dashboard/");
