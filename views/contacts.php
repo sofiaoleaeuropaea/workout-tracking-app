@@ -14,8 +14,8 @@
     <?php require("templates/navbar.php"); ?>
     <main>
         <div class="container">
-            <div className="contact__information__wrapper ">
-                <div className="contact__information__details">
+            <div>
+                <div>
                     <div>
                         <h2>We would love to hear from you!</h2>
                         <p>If you have any questions or feedback, please reach out to us.</p>
@@ -40,7 +40,7 @@
                                 <textarea class="input_field" name="form_message" rows="4" cols="50"></textarea>
                             </div>
                             <div>
-                                <button type="submit" name="register" class="btn">Submit</button>
+                                <button type="submit" name="submit" class="btn">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -57,14 +57,11 @@
                             <a href="tel:+351239000000">(+351) 239000000</a>
                         </address>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
     </main>
-
+    <?php require("views/templates/footer.php"); ?>
 </body>
 
 </html>
