@@ -39,7 +39,7 @@
             </section>
         </div>
     </main>
-
+    <?php require("views/templates/footer.php"); ?>
 </body>
 
 </html>
