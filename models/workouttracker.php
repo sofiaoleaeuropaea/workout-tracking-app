@@ -22,14 +22,14 @@ class WorkoutTracker extends Base
             es.weight AS weight
         FROM 
             workout_plans AS wp
+        INNER JOIN 
+            exercise_tracking AS et ON et.plan_id = wp.plan_id
+        INNER JOIN 
+            exercise_sets AS es ON et.tracking_id = es.tracking_id
         LEFT JOIN 
             plan_exercises AS pe ON wp.plan_id = pe.plan_id
         LEFT JOIN 
-            exercises AS e ON pe.exercise_id = e.exercise_id
-        LEFT JOIN 
-            exercise_tracking AS et ON pe.plan_id = wp.plan_id
-        LEFT JOIN 
-            exercise_sets AS es ON et.tracking_id = es.tracking_id
+            exercises AS e ON es.exercise_id = e.exercise_id
         WHERE 
             wp.plan_id = ?
         ORDER BY 

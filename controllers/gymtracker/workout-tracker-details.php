@@ -18,9 +18,12 @@ if (isset($_SESSION["user_id"])) {
         if (isset($_POST['get_plan_tracker'])) {
             $planTrackerId = $_POST['get_plan_tracker'];
 
-            $workoutPlans = $modelWorkoutPlans->getWorkoutPlansById($_SESSION["user_id"]);
             $workoutsTracker = $modelWorkoutTracker->getExerciseTrackerByWorkoutPlan($planTrackerId);
 
+            if (empty($workoutsTracker)) {
+                echo json_encode(["message" => "No workout data found for the selected plan."]);
+                exit();
+            }
             $workoutTrackerCard = [
                 "plan_name" => $workoutsTracker[0]['plan_name'],
                 "tracking_ids" => []

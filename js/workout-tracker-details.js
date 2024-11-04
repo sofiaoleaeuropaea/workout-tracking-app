@@ -21,19 +21,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return response.json();
       })
       .then((workoutTrackerCard) => {
-        const result = document.createElement('div');
-        workoutTrackerCard.forEach((trackingId) => {
-          const planTrackerCard = document.createElement('div');
+        if (workoutTrackerCard.length > 0) {
+          const result = document.createElement('div');
 
-          planTrackerCard.innerHTML = `<h3>${trackingId.plan_name}</h3>`;
+          workoutTrackerCard.forEach((trackingId) => {
+            const planTrackerCard = document.createElement('div');
 
-          trackingId.tracking_ids.forEach((workout) => {
-            planTrackerCard.innerHTML += `<p>Date: ${workout.tracking_date}</p>
+            planTrackerCard.innerHTML = `<h3>${trackingId.plan_name}</h3>`;
+
+            trackingId.tracking_ids.forEach((workout) => {
+              planTrackerCard.innerHTML += `<p>Date: ${workout.tracking_date}</p>
             <p>Notes: ${workout.tracking_notes}</p>`;
 
-            workout.exercises.forEach((exercise) => {
-              const exerciseCard = document.createElement('div');
-              exerciseCard.innerHTML = `
+              workout.exercises.forEach((exercise) => {
+                const exerciseCard = document.createElement('div');
+                exerciseCard.innerHTML = `
                     <p><strong>Exercise:</strong> ${exercise.name}</p>
                     <div>
                     <table>
@@ -42,26 +44,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         <th>Reps</th>
                         <th>Kg</th>
                       </tr>
-                      ${exercise.sets.map(
-                        (set) =>
-                          `<tr>
+                      ${exercise.sets
+                        .map(
+                          (set) =>
+                            `<tr>
                               <td>${set.set_number}</td>
                               <td>${set.reps}</td>
                               <td>${set.kg}</td>
                             </tr>`,
-                      )}
+                        )
+                        .join('')} 
                     </table>
                     </div>
                   `;
-              planTrackerCard.appendChild(exerciseCard);
+                planTrackerCard.appendChild(exerciseCard);
+              });
             });
+            result.appendChild(planTrackerCard);
           });
-          result.appendChild(planTrackerCard);
-        });
 
-        document.getElementById('plan-tracker_card').appendChild(result);
+          document.getElementById('plan-tracker_card').appendChild(result);
+        } else {
+          planTrackerContainer.innerHTML = `<p>No workout data found for the selected plan.</p>`;
+        }
       })
-
       .catch((error) => {
         console.error('Error loading workout tracker:', error);
         planTrackerContainer.innerHTML =
