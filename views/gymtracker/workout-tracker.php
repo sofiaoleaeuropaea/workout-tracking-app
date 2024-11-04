@@ -52,7 +52,7 @@
                     <button type="submit" name="submit" class="btn">Submit</button>
                 </form>
             </div>
-            <div>
+            <div class="plan_tracker_container">
                 <h2>Previous Workouts</h2>
                 <select class="input_field" id="get_plan_tracker" name="get_plan_tracker" required>
                     <option value="" disabled selected>Select a workout plan</option>

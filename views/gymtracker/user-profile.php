@@ -83,7 +83,7 @@
                     ?>
                 </div>
             </div>
-            <div>
+            <div class="delete_account_wrapper">
                 <button id="delete_account_btn" class="btn">Delete account</button>
             </div>
 

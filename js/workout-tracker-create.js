@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         newSet.innerHTML = `
               <td><input type="number" name="sets[${exerciseId}][${newSetIndex}][reps]" required></td>
               <td><input type="number" name="sets[${exerciseId}][${newSetIndex}][weight]" required></td>
-              <td><button type="button" class="remove_set_btn btn">&times;</button></td>
+              <td><button type="button" class="remove_set_btn btn btn_w">&times;</button></td>
             `;
         exerciseTrackerTable.appendChild(newSet);
 

@@ -11,7 +11,8 @@
 
 <body>
     <?php require("templates/navbar.php"); ?>
-    <div class="container">
+
+    <div class="container form_container_login">
         <div class="form_container form_container-w">
             <?php
             if (isset($message)) {
@@ -20,7 +21,7 @@
             ?>
             <form method="POST" action="<?= ROOT ?>/register/" enctype="multipart/form-data">
                 <div class="input_container">
-                    <label class="input_label" for="input_name"> Name </label>
+                    <label class="input_label" for="input_name">Name</label>
                     <input class="input_field" id="input_name" type="text" name="name" required minlength="3" maxlength="100">
                 </div>
                 <div class="input_container">
@@ -59,6 +60,7 @@
             </form>
         </div>
     </div>
+    <?php require("views/templates/footer.php"); ?>
 </body>
 
 </html>

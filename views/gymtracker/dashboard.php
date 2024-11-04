@@ -15,12 +15,12 @@
     <?php require("views/templates/navbar.php"); ?>
     <main>
         <div class="container">
-            <section>
+            <header>
                 <div class="user_info">
                     <img src="<?php echo $user['photo']; ?>" alt="<?php echo $user['username']; ?>" class="user_photo-small">
                     <h2 class="user_name">Welcome back, <?php echo $user['username']; ?>!</h2>
                 </div>
-            </section>
+            </header>
             <section class="form_container exercise_label">
                 <?php if (!empty($exercises)): ?>
                     <h3>Today's plan </h3>

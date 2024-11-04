@@ -95,15 +95,17 @@
                                                 </option>
                                             <?php endforeach; ?>
                                         </select>
-
-                                        <label for="sets" class="input_label">Target Sets:</label>
-                                        <input type="number" class="input_field" id="sets" name="exercises[0][sets]" min="1" required>
-
-                                        <label for="reps" class="input_label">Target Reps:</label>
-                                        <input type="number" class="input_field" id="reps" name="exercises[0][reps]" min="1" required>
+                                        <div class="exercise_item_detail">
+                                            <label for="sets" class="input_label">Target Sets:</label>
+                                            <input type="number" class="input_field" id="sets" name="exercises[0][sets]" min="1" required>
+                                        </div>
+                                        <div class="exercise_item_detail">
+                                            <label for="reps" class="input_label">Target Reps:</label>
+                                            <input type="number" class="input_field" id="reps" name="exercises[0][reps]" min="1" required>
+                                        </div>
                                         <input type="hidden" name="exercises[0][exercise_order]" value="0">
 
-                                        <button type="button" class="remove_exercise btn">&times;</button>
+                                        <button type="button" class="remove_exercise btn btn_w">&times;</button>
                                     </div>
                                     <button type="button" id="add_exercise" class="btn">Add Exercise</button>
                                 </div>

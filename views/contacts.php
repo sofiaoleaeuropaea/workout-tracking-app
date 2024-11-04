@@ -14,9 +14,9 @@
     <?php require("templates/navbar.php"); ?>
     <main>
         <div class="container">
-            <div>
+            <div class="contact_wrapper">
                 <div>
-                    <div>
+                    <div class="contacts_content">
                         <h2>We would love to hear from you!</h2>
                         <p>If you have any questions or feedback, please reach out to us.</p>
                     </div>
@@ -44,7 +44,7 @@
                             </div>
                         </form>
                     </div>
-                    <div>
+                    <div class="contact_info">
                         <address>
                             <a>Edifício Mirage, R. Dr. Eduardo Neves, Nº3, 1050-077 Lisboa</a>
                         </address>
@@ -58,6 +58,7 @@
                         </address>
                     </div>
                 </div>
+                <div><img src="/images/contact_image.jpg" class="img-fluid contact_img" alt="Woman training"></div>
             </div>
         </div>
     </main>

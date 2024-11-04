@@ -11,8 +11,8 @@
 
 <body>
     <?php require("views/templates/navbar.php"); ?>
-    <div class="container">
-        <h2>Admin area</h2>
+    <div class="container form_container_login">
+        <h2>Admin Login</h2>
         <div class="form_container form_container-w">
             <?php
             if (isset($message)) {

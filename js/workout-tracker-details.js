@@ -26,19 +26,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
           workoutTrackerCard.forEach((trackingId) => {
             const planTrackerCard = document.createElement('div');
-
+            planTrackerCard.classList.add('plan-tracker_card');
             planTrackerCard.innerHTML = `<h3>${trackingId.plan_name}</h3>`;
 
-            trackingId.tracking_ids.forEach((workout) => {
-              planTrackerCard.innerHTML += `<p>Date: ${workout.tracking_date}</p>
-            <p>Notes: ${workout.tracking_notes}</p>`;
+            const trackingContainer = document.createElement('div');
+            trackingContainer.classList.add('tracking_container');
 
+            trackingId.tracking_ids.forEach((workout) => {
+              const exerciseCard = document.createElement('div');
+              exerciseCard.classList.add('exercise_card');
+
+              exerciseCard.innerHTML += `
+                <p><strong>Date:</strong> ${workout.tracking_date}</p>
+                <p><strong>Notes:</strong> ${workout.tracking_notes}</p>
+              `;
               workout.exercises.forEach((exercise) => {
-                const exerciseCard = document.createElement('div');
-                exerciseCard.innerHTML = `
-                    <p><strong>Exercise:</strong> ${exercise.name}</p>
-                    <div>
-                    <table>
+                exerciseCard.innerHTML += `
+                  <p><strong>Exercise:</strong> ${exercise.name}</p>
+                  <div>
+                    <table class="set_list_table set_list_table_w">
                       <tr>
                         <th>Sets</th>
                         <th>Reps</th>
@@ -55,11 +61,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         )
                         .join('')} 
                     </table>
-                    </div>
-                  `;
-                planTrackerCard.appendChild(exerciseCard);
+                  </div>
+                `;
               });
+              trackingContainer.appendChild(exerciseCard);
             });
+
+            planTrackerCard.appendChild(trackingContainer);
+
             result.appendChild(planTrackerCard);
           });
 
