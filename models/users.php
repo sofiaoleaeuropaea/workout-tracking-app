@@ -1,6 +1,4 @@
 <?php
-// TODO: ADD IS_ADMIN
-
 require_once("base.php");
 
 class Users extends Base
@@ -9,9 +7,11 @@ class Users extends Base
     {
         $query = $this->db->prepare("
             SELECT
-                user_id, is_admin, username
+                user_id, name, username, email, created_at, updated_at
             FROM
                 users
+            ORDER BY
+                created_at DESC
         ");
 
         $query->execute();
@@ -23,7 +23,7 @@ class Users extends Base
     {
         $query = $this->db->prepare("
             SELECT
-                user_id, is_admin, name, username, email, password_hash, birth_date, photo
+                user_id, name, username, email, password_hash, birth_date, photo
             FROM
                 users
             WHERE 
@@ -69,21 +69,17 @@ class Users extends Base
 
     public function createUser($user)
     {
-        $api_key = bin2hex(random_bytes(16));
-
         $query = $this->db->prepare("
             INSERT INTO users
-           (is_admin, name, username, email, password_hash, refresh_token, birth_date, photo)
-        VALUES(?, ?, ?, ?, ?, ?, ?, ?)
+           (name, username, email, password_hash, birth_date, photo)
+        VALUES(?, ?, ?, ?, ?, ?)
         ");
 
         $query->execute([
-            0,
             $user["name"],
             $user["username"],
             $user["email"],
             password_hash($user["password"], PASSWORD_DEFAULT),
-            $api_key,
             $user["birthdate"],
             $user["photo"]
         ]);
