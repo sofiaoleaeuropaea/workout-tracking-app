@@ -12,6 +12,11 @@ $modelContactReplies = new ContactReplies();
 $key = ENV["ENCRYPT_KEY"];
 $encryptionUtility = new EncryptionUtility($key);
 
+if (!isset($_SESSION["csrf_token"])) {
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+}
+$csrfToken = $_SESSION["csrf_token"];
+
 if (isset($_GET["request_id"])) {
 
     $encryptedRequestId = $_GET["request_id"];
@@ -23,6 +28,12 @@ if (isset($_GET["request_id"])) {
     }
 
     if (isset($_POST["reply"])) {
+
+        if (empty($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+            http_response_code(403);
+            die("Invalid CSRF token.");
+        }
+
         foreach ($_POST as $key => $value) {
             $_POST[$key] = htmlspecialchars(strip_tags(trim($value)));
         }

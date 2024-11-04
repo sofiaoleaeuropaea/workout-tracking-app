@@ -29,6 +29,8 @@
                         echo '<p role="alert">' . $message . '</p>';
                     } ?>
                     <form method="POST" action="<?php echo ROOT; ?>/admin/support/reply?request_id=<?php echo urlencode($_GET['request_id']); ?>" enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" value="<?php echo $csrfToken; ?>">
+
                         <div class="input_container">
                             <label class="input_label" for="reply_message">Reply Message</label>
                             <textarea class="input_field" name="reply_message" id="reply_message" rows="4" cols="50"></textarea>
