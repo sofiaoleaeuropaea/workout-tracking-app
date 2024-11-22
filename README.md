@@ -39,11 +39,11 @@ Admin Features:
 ### Dependencies used
 
 - PHPMailer: For handling email notifications and sending emails from the server.
-- FullCalendar: For creating interactive and customizable calendar views, useful for scheduling workouts or tracking events.
+- FullCalendar: For creating interactive and customizable calendar views useful for scheduling workouts or tracking events.
 
 ## Next Steps
 
-- Enhance UX/UI: Improve the user experience and interface design to make navigation and interactions more intuitive and visually appealing. Prioritize responsiveness for a smooth experience on all devices, add search functionality, and optimize layouts.
+- Enhance UX/UI: This was a purely backend project. One of the top priorities is to create and improve the user experience and interface design to make navigation and interactions more intuitive and visually appealing. Prioritize responsiveness for a smooth user experience on all devices, add search functionalities, and optimize layouts.
 
 - Integrate New Features: Implement biometric tracking for users to monitor their weight and body fat, allowing for a more personalized fitness journey. Enable users to mark exercises as completed, and add a comprehensive exercise library with detailed descriptions of each exercise.
 
